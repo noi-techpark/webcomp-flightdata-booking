@@ -1,0 +1,131 @@
+{
+  "de": {
+    "errors":{
+        "departureAirport":{
+            "empty":"Beliebiger ausgewählter Abflughafen."
+        },
+        "arrivalAirport":{
+            "empty":"Beliebiger Ankunftsflughafen ausgewählt."
+        },
+        "departureDate":{
+            "empty":"Beliebiges Abreisedatum/Uhrzeit ausgewählt."
+        },
+        "returnDate":{
+            "empty":"Beliebiges Rückgabedatum/Uhrzeit ausgewählt.",
+            "invalid":"Das Rückgabedatum ist ungültig."
+        }
+    },
+    "DepartureAirport": "Abflughafen",
+    "DestinationAirport": "Zielflughafen",
+    "Swap": "Tauschen",
+    "DepartureDate": "Abreisedatum",
+    "ReturnDate": "Rückflugdatum",
+    "RangeDates": "Datumsintervall",
+    "Passengers": "Passagiere",
+    "Loading": "Wird geladen",
+    "Price from": "Preis*",
+    "rateinfo": "*gerundeter ab-Preis pro Erwachsenem, inklusive Steuern",
+    "Arrivals": "Ankünfte",
+    "OutwardFlights": "Hinflüge",
+    "ReturnFlights": "Rückflüge",
+    "Date": "Datum",
+    "Time": "Uhrzeit",
+    "Origin": "Von / Via",
+    "Destination": "Nach / Via",
+    "Gate": "Gate",
+    "Remarks": "Info",
+    "Flight": "Flugnummer",
+    "load more": "mehr anzeigen",
+    "de": "de-DE",
+    "SCHEDULED": "Scheduled",
+    "BOARDING": "Boarding",
+    "LANDED": "Landed",
+    "STARTED": "Starded"
+  },
+  "it": {
+    "errors":{
+        "departureAirport":{
+            "empty":"Nessun aeroporto di partenza selezionato."
+        },
+        "arrivalAirport":{
+            "empty":"Nessun aeroporto di destinazione selezionato."
+        },
+        "departureDate":{
+            "empty":"Nessuna data di partenza selezionata."
+        },
+        "returnDate":{
+            "empty":"Nessuna data di ritorno selezionata.",
+            "invalid":"Data di ritorno invalida."
+        }
+    },
+    "DepartureAirport": "Aeroporto partenza",
+    "DestinationAirport": "Aeroporto destinazione",
+    "Swap": "Inverti",
+    "DepartureDate": "Data di partenza",
+    "ReturnDate": "Data di ritorno",
+    "RangeDates": "Date",
+    "Passengers": "Passeggeri",
+    "Loading": "Caricamento",
+    "Price from": "Prezzo*",
+    "rateinfo": "*prezzo arrotondato per adulto, tasse incluse",
+    "Arrivals": "Arrivi",
+    "OutwardFlights": "Voli di andata",
+    "ReturnFlights": "Voli di ritorno",
+    "Date": "Data",
+    "Time": "Ora",
+    "Origin": "Da / Via",
+    "Destination": "A / Via",
+    "Gate": "Gate",
+    "Remarks": "Info",
+    "Flight": "Numero volo",
+    "load more": "Mostra di più",
+    "de": "it-IT",
+    "SCHEDULED": "Scheduled",
+    "BOARDING": "Boarding",
+    "LANDED": "Landed",
+    "STARTED": "Starded"
+  },
+  "en": {
+    "errors":{
+        "departureAirport":{
+            "empty":"Any departure airport selected."
+        },
+        "arrivalAirport":{
+            "empty":"Any arrival airport selected."
+        },
+        "departureDate":{
+            "empty":"Any departure datetime selected."
+        },
+        "returnDate":{
+            "empty":"Any return datetime selected.",
+            "invalid":"Return date is invalid."
+        }
+    },
+    "DepartureAirport": "Departure from",
+    "DestinationAirport": "Arriving at",
+    "Swap": "Swap",
+    "DepartureDate": "Deapeture date",
+    "ReturnDate": "Return date",
+    "RangeDates": "Dates",
+    "Passengers": "Passengers",
+    "Loading": "Loading",
+    "Price from": "Price*",
+    "rateinfo": "*rounded from price per adult, including taxes",
+    "Arrivals": "Arrivals",
+    "OutwardFlights": "Outward flights",
+    "ReturnFlights": "Return flights",
+    "Date": "Date",
+    "Time": "Time",
+    "Origin": "From / Via",
+    "Destination": "To / Via",
+    "Gate": "Gate",
+    "Remarks": "Info",
+    "Flight": "Flight",
+    "load more": "show more",
+    "en": "en-GB",
+    "SCHEDULED": "Scheduled",
+    "BOARDING": "Boarding",
+    "LANDED": "Landed",
+    "STARTED": "Starded"
+  }
+}

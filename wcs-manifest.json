@@ -1,10 +1,10 @@
 {
-  "title": "Hello-world",
-  "shortName": "hello-world-2",
-  "description": "Hello world simple webcomp example",
-  "descriptionAbstract": "Hello world simple webcomp example",
+  "title": "Webcomponent: Flightdata booking",
+  "shortName": "Flightdata booking",
+  "description": "A webcomponent that manage flightdata booking process & Skyalps flights",
+  "descriptionAbstract": "A webcomponent that manage flightdata booking process & Skyalps flights",
   "license": "AGPL-3.0-or-later",
-  "repositoryUrl": "https://your-repository.git",
+  "repositoryUrl": "https://github.com/noi-techpark/webcomp-flightdata-booking.git",
   "copyrightHolders": [
     {
       "name": "NOI",
@@ -15,32 +15,107 @@
   ],
   "authors": [
     {
-      "name": "...",
-      "email": "...",
-      "organization": "...",
-      "organizationUrl": "..."
+      "name": "Marco Dalle Feste",
+      "email": "marco@dallefeste.com",
+      "organization": "Marco Dalle Feste",
+      "organizationUrl": "https://dallefeste.com"
     }
   ],
   "image": "wcs-logo.png",
-  "searchTags": [],
+  "searchTags": [
+    "booking",
+    "flightdata",
+    "skyalps",
+    "mqtt",
+    "websockets"
+  ],
   "dist": {
     "basePath": "dist",
     "files": [
-      "webcomp-boilerplate.min.js"
+      "noi-flightdata-booking.min.js"
     ],
     "scripts": [
+      {
+        "file": "noi-flightdata-booking.min.js",
+        "parameter": ""
+      }
     ]
   },
   "configuration": {
-    "tagName": "hello-world",
+    "tagName": "noi-flightdata-booking",
     "options": [
       {
-        "key": "title",
-        "type": "text",
-        "label": "title of the web-comp",
+        "key": "language",
+        "type": "select",
+        "label": "Two letter key for the language to be used. Fallback is `en`",
         "required": false,
         "options": {
-          "default": "hello-world"
+          "values": [
+            "en",
+            "de",
+            "it"
+          ],
+          "default": "en"
+        }
+      },
+      {
+        "key": "theme",
+        "type": "select",
+        "label": "Color presets",
+        "options": {
+          "values": [
+            "odh",
+            "skyalps"
+          ],
+          "default": "odh"
+        }
+      },
+      {
+        "key": "id",
+        "type": "text",
+        "label": "Unique Element Id (required if styleurl is used)",
+        "required": false,
+        "options": {
+          "default": "fligtdata-booking"
+        }
+      },
+      {
+        "key": "styleurl",
+        "type": "text",
+        "label": "External Stylesheet Url (...with cors enabled)",
+        "required": false,
+        "options": {
+          "default": ""
+        }
+      },
+      {
+        "key": "timezone",
+        "type": "text",
+        "label": "The local timezone.",
+        "required": false,
+        "options": {
+          "default": "Europe/Berlin"
+        }
+      },
+      {
+        "key": "maxforecast",
+        "type": "text",
+        "label": "Max entries per table",
+        "required": false,
+        "options": {
+          "default": "5"
+        }
+      },      
+      {
+        "key": "header",
+        "type": "select",
+        "label": "Show clock & airport",
+        "options": {
+          "values": [
+            "true",
+            "false"
+          ],
+          "default": "true"
         }
       }
     ]
