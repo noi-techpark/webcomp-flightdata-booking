@@ -1,6 +1,11 @@
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <template>
-    <div class="form-floating">
-        <input  class="form-control" 
+    <div class="form-floating airports-selector">
+        <input  class="form-control airports-selector-input" 
                 :name="name" 
                 type="text"
                 ref="passengers"
@@ -10,15 +15,7 @@
                 @blur="onBlur"
                 placeholder="Search something..." >
 
-        <div class="airport-dropdown-container text-left" v-bind:class="classObject"> <!--@blur="onBlur"  -->
-            
-            <!-- <div class="airport-dropdown-element" @click="selectAirport(null)">
-                <div class="row ">
-                    <span class="col text-start">{{ $parent.$t("AllAirports") }}</span> 
-                    <span class="col text-end"></span>
-                </div>
-            </div> -->
-            
+        <div class="airport-dropdown-container text-left" v-bind:class="classObject">            
             <div v-for="(cluster, index) in filteredClusters" class="airport-dropdown-cluster">
                 <div class="airport-dropdown-element clusterParent text-start" @click="selectAirport(cluster)">
                     {{ cluster.label }}
@@ -90,7 +87,9 @@
                         )
                     });
                     
-                    if(cluster.airports.length > 0){
+                    if( cluster.airports.length > 0 || 
+                        cluster.value.toUpperCase().includes(that.searchText.toUpperCase()) ||
+                        cluster.label.toUpperCase().includes(that.searchText.toUpperCase())){
                         return true;
                     }else{
                         return false;
@@ -117,6 +116,9 @@
         },
 
         methods: {
+            setValue(val){
+                this.selectAirport(val)
+            },
             onFocus() {
                 this.isOpen = true
             },
@@ -127,19 +129,13 @@
                 },200);
             },
             selectAirport(el) {
-                // if (el == null){
-                //     el = {label:this.$parent.$t("AllAirports"),value:null};
-                // }
-
                 let selectedValue = el.value
                 let selectedLabel = el.label
                 this.selectedElement = {
                     value:selectedValue,
                     label:selectedLabel
                 }
-                
-                console.log(this.selectedElement)
-                
+                                
                 this.isOpen = false;
                 this.searchText = selectedLabel
             }
@@ -152,7 +148,6 @@
 
     $lightgrey: #f5f4f6;
     $grey: #e0e0e0;
-
 
     .airport-dropdown-container{
         display: none;
@@ -167,24 +162,7 @@
         position: absolute;
         z-index:10;
         overflow: auto;
-        // &:after {
-        //     content: "";
-        //     position: absolute;
-        //     background: black;
-        //     width: 0;
-        //     height: 0;
-        //     /* margin-left: 0em; */
-        //     /* margin-top: 0em; */
-        //     left: calc(50% - 0.5rem);
-        //     top: -0.5rem;
-        //     box-sizing: border-box;
-        //     border: 0.5rem solid black;
-        //     border-color: transparent transparent #fff #fff;
-        //     /* transform-origin: 50% 50%; */
-        //     z-index: 9999999;
-        //     transform: rotate(-45deg);
-        //     /* box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.1); */
-        // }
+
         .airport-dropdown-cluster{
             
         }
@@ -212,4 +190,11 @@
             display: block;
         }
     }
+
+
+    .form-floating > .form-control{
+        padding-top: 1.1rem;   
+        padding-bottom: 1.1rem;   
+    }
+    
 </style>

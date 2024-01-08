@@ -1,3 +1,8 @@
+/* 
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 .mx-icon-left:before,
 .mx-icon-right:before,
 .mx-icon-double-left:before,
@@ -132,12 +137,6 @@
 	transform: scaleY(0)
 }
 
-/* .mx-datepicker {
-	position: relative;
-	display: inline-block;
-	width: 210px
-} */
-
 .mx-datepicker svg {
 	width: 1em;
 	height: 1em;
@@ -146,17 +145,11 @@
 	overflow: hidden
 }
 
-/* .mx-datepicker-range {
-	width: 320px
-} */
 
 .mx-datepicker-inline {
 	width: auto
 }
 
-/* .mx-input-wrapper {
-	position: relative
-} */
 
 .mx-input {
 	display: inline-block;
@@ -193,22 +186,27 @@
 	outline: none
 }
 
-/* .mx-input::-ms-clear {
-	display: none
-} */
-
 .mx-icon-calendar,
-.mx-icon-clear {
+.mx-icon-clear{
 	position: absolute;
-	top: 50%;
-	right: 8px;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
-	font-size: 16px;
+	top: 0.5rem;
+	right: 0rem;
+	font-size: 1rem;
 	line-height: 1;
 	color: rgba(0, 0, 0, .5);
 	vertical-align: middle
 }
+.mx-icon-calendar svg,
+.mx-icon-clear svg{
+	position: absolute;
+	top: 0.5rem;
+	right: 0rem;
+	font-size: 1rem;
+	line-height: 1;
+	color: rgba(0, 0, 0, .5);
+	vertical-align: middle
+}
+
 
 .mx-icon-clear {
 	cursor: pointer
@@ -266,15 +264,6 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex
-}
-
-@media(max-width: 750px) {
-	.mx-range-wrapper {
-		-webkit-box-orient: vertical;
-		-webkit-box-direction: normal;
-		-ms-flex-direction: column;
-		flex-direction: column
-	}
 }
 
 .mx-datepicker-header {

@@ -24,10 +24,8 @@
   "image": "wcs-logo.png",
   "searchTags": [
     "booking",
-    "flightdata",
-    "skyalps",
-    "mqtt",
-    "websockets"
+    "flights",
+    "skyalps"
   ],
   "dist": {
     "basePath": "dist",
@@ -100,24 +98,12 @@
       {
         "key": "maxforecast",
         "type": "text",
-        "label": "Max entries per table",
+        "label": "Max entries to show",
         "required": false,
         "options": {
-          "default": "5"
+          "default": "10"
         }
-      },      
-      {
-        "key": "header",
-        "type": "select",
-        "label": "Show clock & airport",
-        "options": {
-          "values": [
-            "true",
-            "false"
-          ],
-          "default": "true"
-        }
-      }
+      }    
     ]
   }
 }

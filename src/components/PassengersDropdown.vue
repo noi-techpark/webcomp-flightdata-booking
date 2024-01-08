@@ -1,5 +1,10 @@
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <template>
-    <div class="form-floating gx-1 px-1">
+    <div class="form-floating gx-1">
         <input  class="form-control" 
                 :name="name" 
                 type="text"
@@ -20,8 +25,8 @@
                         <div class="passengers-plus-minus" :class="{disabled: selection.values.adults <= 1}" @click.stop="change('adults',-1)">-</div>
                     </div> 
                     <div class="col-6 text-center">
-                        {{ selection.values.adults }} <span v-if="selection.values.adults <= 1">adult</span><span v-else>adults</span><br/>
-                        <span class="subtitle">Ages 2+</span>
+                        {{ selection.values.adults }} <span v-if="selection.values.adults <= 1">{{ $parent.$t("adult") }}</span><span v-else>{{ $parent.$t("adults") }}</span><br/>
+                        <span class="subtitle">{{ $parent.$t("ages11") }}</span>
                     </div>
                     <div class="col-3 text-center">
                         <div class="passengers-plus-minus" @click.stop="change('adults',+1)">+</div>
@@ -32,11 +37,23 @@
                         <div class="passengers-plus-minus" :class="{disabled: selection.values.children <= 0}" @click.stop="change('children',-1)">-</div>
                     </div> 
                     <div class="col-6 text-center">
-                        {{ selection.values.children }} <span v-if="selection.values.children <= 1">child</span><span v-else>children</span><br/>
-                        <span class="subtitle">Under 2 years</span>
+                        {{ selection.values.children }} <span v-if="selection.values.children <= 1">{{ $parent.$t("child") }}</span><span v-else>{{ $parent.$t("children") }}</span><br/>
+                        <span class="subtitle">{{ $parent.$t("ages2-11") }}</span>
                     </div>
                     <div class="col-3 text-center">
                         <div class="passengers-plus-minus" @click.stop="change('children',+1)">+</div>
+                    </div> 
+                </div>
+                <div class="row passengers-dropdown-row">
+                    <div class="col-3 text-center">
+                        <div class="passengers-plus-minus" :class="{disabled: selection.values.infants <= 0}" @click.stop="change('infants',-1)">-</div>
+                    </div> 
+                    <div class="col-6 text-center">
+                        {{ selection.values.infants }} <span v-if="selection.values.infants <= 1">{{ $parent.$t("infant") }}</span><span v-else>{{ $parent.$t("infants") }}</span><br/>
+                        <span class="subtitle">{{ $parent.$t("ages2") }}</span>
+                    </div>
+                    <div class="col-3 text-center">
+                        <div class="passengers-plus-minus" @click.stop="change('infants',+1)">+</div>
                     </div> 
                 </div>
             </div>
@@ -71,7 +88,7 @@
                 isOpen: false,
                 passengersText: '1 adult',
                 selection:{
-                    values:{adults:1,children:0},
+                    values:{adults:1,children:0,infants:0},
                     label:'1 adult'
                 }
             }
@@ -104,9 +121,12 @@
                 return true;
             },
             buildLabel(values){
-                let str = (values.adults + ((values.adults <= 1) ? ' adult' : ' adults'));
+                let str = (values.adults + ((values.adults <= 1) ? ' '+this.$parent.$t("adult") : ' '+this.$parent.$t("adults")));
                 if(values.children > 0){
-                    str += " - "+(values.children + ((values.children <= 1) ? ' child' : ' children'));
+                    str += " - "+(values.children + ((values.children <= 1) ? ' '+this.$parent.$t("child") : ' '+this.$parent.$t("children")));
+                }
+                if(values.infants > 0){
+                    str += " - "+(values.infants + ((values.infants <= 1) ? ' '+this.$parent.$t("infant") : ' '+this.$parent.$t("infants")));
                 }
                 return str;
             },
@@ -146,24 +166,6 @@
         margin: 1rem calc(10%/2);
         position: absolute;
         overflow: auto;
-        // &:after {
-        //     content: "";
-        //     position: absolute;
-        //     background: black;
-        //     width: 0;
-        //     height: 0;
-        //     /* margin-left: 0em; */
-        //     /* margin-top: 0em; */
-        //     left: calc(50% - 0.5rem);
-        //     top: -0.5rem;
-        //     box-sizing: border-box;
-        //     border: 0.5rem solid black;
-        //     border-color: transparent transparent #fff #fff;
-        //     /* transform-origin: 50% 50%; */
-        //     z-index: 9999999;
-        //     transform: rotate(-45deg);
-        //     /* box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.1); */
-        // }
 
         h3{
             font-size: 1.2rem;

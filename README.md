@@ -25,92 +25,40 @@ A customizable map for displaying air traffic in and around BZO/Bolzano. Real-ti
 Include vue.js (https://unpkg.com/vue) and the webcompscript file `dist/noi-flightdata-booking.min.js` in your HTML and define the web component like this:
 
 ```html
- <noi-flightdata-booking
- lang="en"
- departures="true"
- arrivals="true"
- realtime="true"
- regionswitch="true"
- timezone="UTC"
- maxentries="5"
- maxage="60"
- ></noi-flightdata-booking>
+<noi-flightdata-booking theme="odh"
+                        langPack='{ "es" : { "periods": {  "day": "By days", "week": "By weeks"  } } }'
+                        id="fligtdata-booking"
+                        styleurl=""
+                        language="en"
+                        timezone="Europe/Berlin"
+                        maxforecast="10">
+</noi-flightdata-booking>
 ```
-For a full example, configuration and filter options and available custom properties please have a look at [the demo 1](demo.html) [the demo 2](demo_filters_and_single_use.html)
+For a full example, configuration and filter options and available custom properties please have a look at [the demo](demo.html).
 
 ### Attributes
 
-#### styleurl
-
-you can specify a url from an external stylesheet (css). this stylesheet will then be appended to the shadowroot and thus allows overriding most css rules.
-if this option is used, an id must be assigned to the element.
-
-#### airports and nations (filter)
-
-The attributes airports and nations can each be passed an array which defines the airports or nations to be displayed.
-Airports and nations can be shown or hidden by their abbreviations. Corresponding abbreviations are currently stored statically and can be viewed under src/mappings/airport_types.js. Listed abbreviations are displayed, abbreviations preceded by ! are explicitly excluded. If exclusions are defined, other values are ignored.
-
-Examples:
-
-```
-  airports='["!HAM", "BER"]'
-  nations='["DE"]'
-```
-
-Only flights that start or end in Germany are displayed. Flights which start or end in Hamburg are not displayed. Since an exclusion exists, the "BER" specification is ignored.
-
-```
-  airports='["HAM", "BER"]'
-  nations='["DE"]'
-```
-
-Only flights departing from or arriving in Hamburg or Berlin are displayed.
-
-```
-  airports='["HAM", "BER"]'
-  nations='["IT", "DNK"]'
-```
-
-Mutually exclusive configuration, nothing is displayed at all.
-
-For a full example, configuration and filter options and available custom properties please have a look at [the demo 1](demo.html) [the demo 2](demo_filters_and_single_use.html)
-
-#### lang
+#### language
 
 The language in which the component is rendered
 
 Type: string<br>
 Options: "en", "it", "de"
 
-Translations can be changed or added via the messages attribute: [demo](demo_filters_and_single_use.html)
+Translations can be changed or added via the langPack attribute: [the demo](demo.html)
 
-#### departures, arrivals, regionswitch, realtime
+#### theme
 
-Visibility of the individual subcomponents
+This attribute can be used to apply a predefined set of colors.
 
-Type: Boolean <br>
-Options: "true", "false"
+Type: string<br>
+Options: "odh", "skyalps"
 
-departures: table of departures, default = true<br>
-arrivals: table with arrivals, default = true<br>
-regionswitch: buttons for switching the view, default = true<br>
-realtime: Table with realtime data, default = true<br>
-buyticket: button with the link to buy the respective flight, default = true<br>
-sidebar: shows the sidebar with the info on the flights, default = true
+#### styleurl
 
-#### metricunits
+you can specify a url from an external stylesheet (css). This stylesheet will then be appended to the shadowroot and thus allows overriding most css rules.
+If this option is used, an id must be assigned to the element.
 
-Show units as metric values
-
-Type: Boolean<br>
-Options: "true", "false"
-
-#### maxage
-
-Received data will be interpreted as valid for && deleted after X seconds
-
-Type: Number (seconds)<br>
-Default: 60
 
 #### timezone
 
@@ -119,53 +67,31 @@ timezone for arrivals/departures
 Type: Timezone name (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)<br>
 Default: UTC
 
+#### maxforecast
+
+Maximum flights entries to be shown for departure and arrival 
+
+Type: Number<br>
+Default: 5
+
 #### colors
 
-in-map coloring (aircraft)
+Main webcomponent colors. A full customization in colors can be made by using a custom css via styleUrl attribute.
 
 Type: Object<br>
 Default:
 ```
 {
-  primary: "#0068B4",
-  secondary: "#555555",
-  primary_contrast: "#ffffff",
-  secondary_contrast: "#ffffff"
+    --noi-primary: white;
+    --noi-mid: #f5f5f5;
+    --noi-secondary: black;
+    --noi-text-primary: black;
+    --noi-text-secondary: white;
+    --noi-light-bg: #F5F4F6;
+    --noi-font-family: 'Barlow Semi Condensed';
+    --basic-font-size: 16px;
 }
 ```
-
-#### regions
-
-preset regions, first region is used as start screen and sidebar header label
-
-Type: Array<br>
-Default:
-```
-[
-  {
-    label: "Airport",
-    center: [11.326656463229954, 46.44298771993968],
-    zoom: 14,
-  },
-  {
-    label: "Region",
-    center: [11.463606010174134, 46.42665096950925],
-    zoom: 10,
-  },
-]
-```
-
-#### maxforecast
-
-maximum entries for departure and arrival
-
-Type: Number<br>
-Default: 5
-
-
-#### filters, columns, airports, nations
-
-See [demo](demo_filters_and_single_use.html) for an example of the more complex data attributes
 
 ## Getting started
 
@@ -185,13 +111,13 @@ For a ready to use Docker environment with all prerequisites already installed a
 Get a copy of the repository:
 
 ```bash
-git clone https://github.com/noi-techpark/webcomp-flightdata
+git clone https://github.com/noi-techpark/webcomp-flightdata-booking
 ```
 
 Change directory:
 
 ```bash
-cd webcomp-flightdata/
+cd webcomp-flightdata-booking/
 ```
 
 ### Dependencies

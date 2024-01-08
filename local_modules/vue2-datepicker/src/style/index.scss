@@ -121,12 +121,13 @@
   line-height: 24px;
 }
 
-.#{$namespace}-range-wrapper {
-  display: flex;
-  @media (max-width: 750px) {
-    flex-direction: column;
-  }
-}
+// .#{$namespace}-range-wrapper {
+//   display: flex;
+//   @media (max-width: 585px) {
+// //   @media (max-width: 750px) {
+//     flex-direction: column;
+//   }
+// }
 
 .#{$namespace}-datepicker-header {
   padding: 6px 8px;

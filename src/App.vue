@@ -8,18 +8,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <NoiFlightControl :options="{
     language: language,
     langPack: JSON.parse(langPack),
-    colors: JSON.parse(colors),
     theme: theme,
-    tableheight: tableheight,
-    timezoneSwitcher: timezoneswitch,
-    metricUnits: metricunits,
     timezone: timezone,
-    timezones: JSON.parse(timezones),
     maxforecast: maxforecast,
-    wss_endpoint: wssendpoint,
     rest_endpoint: restendpoint,
-    filters: JSON.parse(filters),
-    columns: JSON.parse(columns)
   }" />
 </template>
 
@@ -57,98 +49,23 @@ export default {
       type: String,
       default: "{}"
     },
-    // disabled / obsolete?: click clock instead
-    timezoneswitch: {
-      type: Boolean,
-      default: false
-    },
-    metricunits: {
-      type: Boolean,
-      default: true
-    },
     theme: {
       type: String,
-      // "terminal" || "skyalps"
-      default: "terminal"
-    },
-    tableheight: {
-      type: String,
-      default: "auto"
-    },
-    // airports: {
-    //   type: String,
-    //   default: () => {
-    //     return JSON.stringify([])
-    //   }
-    // },
-    timezone: {
-      type: String,
-      default: "local"
-      // https://www.npmjs.com/package/tzdata list
-    },
-    wssendpoint: {
-      type: String,
-      default: "wss://ws.datapool.opendatahub.testingmachine.eu/flightdata/sbs-aggregated"
+      // "odh" || "skyalps"
+      default: "odh"
     },
     restendpoint: {
       type: String,
       default: "https://mobility.api.opendatahub.com/v2/flat%2Cnode/Flight?"
     },
+    timezone: {
+      type: String,
+      default: "local"
+      // https://www.npmjs.com/package/tzdata list
+    },
     maxforecast: {
       type: Number,
-      default: 100
-    },
-    colors: {
-      type: String,
-      default: () => {
-        return JSON.stringify({
-          primary: "#0068B4",
-          secondary: "#555555",
-          primary_contrast: "#ffffff",
-          secondary_contrast: "#ffffff"
-        })
-      }
-    },
-    filters: {
-      type: String,
-      default: () => {
-        return JSON.stringify({
-          from_ts: false,
-          to_ts: false,
-          airport: "BZO"
-        })
-      }
-    },
-    columns: {
-      type: String,
-      default: () => {
-        return JSON.stringify({
-          date: true,
-          time: true,
-          airline: true,
-          fromto: true,
-          flightnumber: true,
-          remark: true,
-          gate: true,
-          ticketlink: true,
-          morebutton: true,
-        })
-      }
-    },
-    timezones: {
-      type: String,
-      default: () => {
-        return JSON.stringify([
-          {
-            label: "UTC",
-            code: "UTC"
-          },
-          {
-            label: "Local time",
-            code: "local"
-          }
-        ])
-      }
+      default: 10
     }
   },
   components: {
@@ -173,6 +90,19 @@ export default {
           console.error("wrong stylesheet url. styles can not be applied. cors disabled (?)")
         })
     }
+  },
+  created(){
+    // add default fonts
+    const fontOdh = document.createElement("link");
+    fontOdh.type = "text/css";
+    fontOdh.rel = "stylesheet";
+    fontOdh.href = "https://fonts.testingmachine.eu/source-sans-pro/style.css";
+    document.head.appendChild(fontOdh);
+    const fontSkyalps = document.createElement("link");
+    fontSkyalps.type = "text/css";
+    fontSkyalps.rel = "stylesheet";
+    fontSkyalps.href = "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300&display=swap";
+    document.head.appendChild(fontSkyalps);
   }
 }
 </script>
