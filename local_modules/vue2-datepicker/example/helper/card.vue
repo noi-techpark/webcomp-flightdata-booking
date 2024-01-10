@@ -1,3 +1,7 @@
+<!--  
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later  
+-->
 <template>
   <div class="card" :class="{ active }">
     <section :id="id" class="card-title" v-html="title"></section>

@@ -1,3 +1,7 @@
+<!-- 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+-->
 # vue2-datepicker
 
 [English Version](https://github.com/mengxiong10/vue2-datepicker/blob/master/README.md)

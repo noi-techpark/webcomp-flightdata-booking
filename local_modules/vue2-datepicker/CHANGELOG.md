@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <a name="3.11.1"></a>
 ## [3.11.1](https://github.com/mengxiong10/vue2-datepicker/compare/v3.11.0...v3.11.1) (2022-12-01)
 

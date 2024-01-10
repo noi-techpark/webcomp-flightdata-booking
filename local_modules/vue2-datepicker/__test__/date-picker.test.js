@@ -1,3 +1,7 @@
+/* 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 import { shallowMount, createWrapper, mount } from '@vue/test-utils';
 import { format, parse } from 'date-fns';
 import Popup from '../src/popup';

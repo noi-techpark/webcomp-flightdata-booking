@@ -1,3 +1,7 @@
+/* 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 /* eslint-disable no-await-in-loop */
 import { mount, shallowMount } from '@vue/test-utils';
 import CalendarPanel from '../src/calendar/calendar-panel';

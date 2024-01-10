@@ -1,3 +1,7 @@
+/* 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 // new Date(10, 0, 1) The year from 0 to 99 will be incremented by 1900 automatically.
 export function createDate(y, M = 0, d = 1, h = 0, m = 0, s = 0, ms = 0) {
   const date = new Date(y, M, d, h, m, s, ms);

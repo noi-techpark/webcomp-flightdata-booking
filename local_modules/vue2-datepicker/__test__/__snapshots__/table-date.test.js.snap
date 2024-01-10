@@ -1,3 +1,7 @@
+/* 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TableDate corrent render 1`] = `

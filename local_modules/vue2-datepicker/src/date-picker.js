@@ -1,3 +1,7 @@
+/* 
+    SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+    SPDX-License-Identifier: AGPL-3.0-or-later 
+*/
 import { parse, format, getWeek } from 'date-format-parse';
 import { isValidDate, isValidRangeDate, isValidDates } from './util/date';
 import { pick, isObject, mergeDeep } from './util/base';
