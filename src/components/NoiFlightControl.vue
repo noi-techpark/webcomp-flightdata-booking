@@ -1752,7 +1752,7 @@ export default {
 .noi-flightdata-booking {
 
     font-family: var(--noi-font-family, 'Barlow Semi Condensed','Source Sans Pro', Verdana);
-    font-size: var(--basic-font-size, 10px);
+    font-size: var(--basic-font-size, 16px);
     color: var(--noi-text-primary, #000000);
     background-color: white;;
 
