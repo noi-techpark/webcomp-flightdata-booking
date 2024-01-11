@@ -25,7 +25,7 @@ A customizable map for displaying air traffic in and around BZO/Bolzano. Real-ti
 Include vue.js (https://unpkg.com/vue) and the webcompscript file `dist/noi-flightdata-booking.min.js` in your HTML and define the web component like this:
 
 ```html
-<noi-flightdata-booking theme="odh"
+<noi-flightdata-booking theme="OpenDataHub"
                         langPack='{ "es" : { "periods": {  "day": "By days", "week": "By weeks"  } } }'
                         id="fligtdata-booking"
                         styleurl=""
@@ -52,7 +52,7 @@ Translations can be changed or added via the langPack attribute: [the demo](demo
 This attribute can be used to apply a predefined set of colors.
 
 Type: string<br>
-Options: "odh", "skyalps"
+Options: "OpenDataHub", "skyalps"
 
 #### styleurl
 
