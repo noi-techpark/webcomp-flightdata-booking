@@ -196,5 +196,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         padding-top: 1.1rem;   
         padding-bottom: 1.1rem;   
     }
+    .form-floating > .form-control:focus, .form-floating > .form-control:not(:placeholder-shown), .form-floating > .form-control-plaintext:focus, .form-floating > .form-control-plaintext:not(:placeholder-shown){
+        font-weight: 600;
+    }
     
 </style>

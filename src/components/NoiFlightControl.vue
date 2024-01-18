@@ -1751,7 +1751,7 @@ export default {
 
 .noi-flightdata-booking {
 
-    font-family: var(--noi-font-family, 'Barlow Semi Condensed','Source Sans Pro', Verdana);
+    font-family: var(--noi-font-family, 'Source Sans Pro', 'Barlow Semi Condensed',Verdana);
     font-size: var(--basic-font-size, 16px);
     color: var(--noi-text-primary, #000000);
     background-color: white;;
@@ -1771,7 +1771,7 @@ export default {
 
     h2 {
         font-size: 1.875rem;
-        font-weight: bold;
+        font-weight: 500;
         line-height: 2.5rem;
         margin-bottom: 0.125rem;
         padding-top: 0.25rem;
@@ -1846,8 +1846,45 @@ export default {
         --noi-secondary: #004988;
         --noi-text-primary: black;
         --noi-text-secondary: white;
-        
+        --noi-font-family: 'Barlow Semi Condensed';
         --noi-text-blue: #004988;
+
+        h2{
+            font-weight: 600;
+        }
+
+
+        &.smartphone{
+            .noi-selection-bar .price, .noi-flightdata-booking.tablet .noi-selection-bar .price{
+                font-weight: 600;
+            }
+            .noi-results .noi-results-flights .noi-flights-results-list .noi-flights-results-row .noi-flight-row-airport span.hour, &.smartphone .noi-results .noi-results-flights .noi-flights-results-list .noi-flights-results-row .noi-flight-row-airport div.hour, .noi-flightdata-booking.tablet .noi-results .noi-results-flights .noi-flights-results-list .noi-flights-results-row .noi-flight-row-airport span.hour, .noi-flightdata-booking.tablet .noi-results .noi-results-flights .noi-flights-results-list .noi-flights-results-row .noi-flight-row-airport div.hour{
+                font-weight: 600;
+            }
+            .mobile-summary-container{
+                .row{
+                    .main-title{
+                        font-weight: 600;
+                    }
+                    .title{
+                        font-weight: 600;
+                    }
+                    .warning-title{
+                        font-weight: 600;
+                    }
+                    .price{
+                        font-weight: 600;
+                    }
+
+                    .flight-container{
+                        .flight-price{
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+
         .button{
             color: var(--noi-text-blue, #004988);
 
@@ -1888,6 +1925,7 @@ export default {
                 }
             }
         }
+        
         .noi-results{
             .noi-results-top-summary{
                 .title{
@@ -1907,6 +1945,9 @@ export default {
                             fill:white;
                         }
                     }
+                }
+                .noi-flights-results-list .noi-flights-results-row .noi-flight-row-button .button{
+                    font-weight: 600;
                 }
             }
         }
@@ -2036,7 +2077,7 @@ export default {
                 background-color: white;
                 padding: 0.5rem 0;
                 text-transform: uppercase;
-                font-weight: bold;
+                font-weight: 600;
                 img{
                     height: 2rem;
                     &.rotate{
@@ -2124,10 +2165,10 @@ export default {
                             margin-top: 0;
 
                             span,div{
-                                font-weight: normal;
+                                font-weight: 400;
                                 &.hour{
                                     font-size:1.25rem;
-                                    font-weight: bold;
+                                    font-weight: 500;
                                 }
                             }
 
@@ -2143,7 +2184,7 @@ export default {
 
                         .noi-flight-row-path{
                             span{
-                                font-weight: normal;
+                                font-weight: 400;
                             }
                             .noi-flight-row-plane-line{
                                 div.plane{
@@ -2161,8 +2202,14 @@ export default {
                                 margin:0;
                             }
                             span{
-                                font-weight: normal;
+                                font-weight: 400;
                                 font-size: 0.7rem;
+                            }
+                        }
+
+                        .noi-flight-row-button{
+                            .button{
+                                font-weight: 600;
                             }
                         }
                     }
@@ -2276,7 +2323,7 @@ export default {
         
         
         .noi-selection-bar{
-            height: 5.2rem;
+            height: 5.8rem;
             box-shadow: 0 -2px 8px -5px #000;
             z-index: 5;
            
@@ -2290,8 +2337,7 @@ export default {
 
             .continue-button{
                 right: 0.5rem;
-                bottom: 0;
-                top:1rem;
+                top:1.5rem;
                 padding: 0.8rem 2.5rem;
                 
                 &.disabled{
@@ -2313,7 +2359,8 @@ export default {
 
             }
 
-            .price{
+            .price{ 
+                font-weight: 500;
                 position: unset;
                 padding: 0;
             }
@@ -2362,12 +2409,12 @@ export default {
                 .main-title{
                     text-align: left;
                     font-size: 1.25rem;
-                    font-weight: bold;
+                    font-weight: 500;
                 }
                 .title{
                     text-align: left;
                     font-size: 1rem;
-                    font-weight: bold;
+                    font-weight: 500;
 
                     svg{
                         color:#faa503;    
@@ -2379,7 +2426,7 @@ export default {
                 .warning-title{
                     text-align: left;
                     font-size: 1.25rem;
-                    font-weight: bold;
+                    font-weight: 500;
 
                     svg{
                         color:#faa503;        
@@ -2389,7 +2436,7 @@ export default {
                     }
                 }
                 .close-button{
-                    font-weight: bold;
+                    font-weight: 600;
                     text-align: right;
                     margin-top:0.3125rem;
                     font-size: 1.3rem;
@@ -2397,7 +2444,7 @@ export default {
                 .price{
                     text-align: right;
                     font-size: 1.25rem;
-                    font-weight: bold;
+                    font-weight: 500;
                 }
 
                 .flight-container{
@@ -2430,7 +2477,7 @@ export default {
                     .flight-price{
                         text-align: right;
                         font-size: 1.25rem;
-                        font-weight: bold;
+                        font-weight: 500;
                     }
                 }
             }
@@ -2522,6 +2569,7 @@ export default {
 
         input{
             border: 1px solid var(--noi-light-bg, #F5F4F6);
+            font-weight: 600;
         }
 
         .noi-trip-type-container{
@@ -2576,7 +2624,7 @@ export default {
             .mx-btn{
                 &.mx-btn-text{
                     color:black;
-                    font-weight: bold;
+                    font-weight: 600;
                     font-size: 0.8rem;
                 }
             }
@@ -2604,7 +2652,7 @@ export default {
             padding-top: 0.25rem;
             padding-left: 0.45rem;
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
 
             img{
@@ -2640,10 +2688,11 @@ export default {
                 }
                 display: block;
                 color:var(--noi-text-primary, black);
-                font-weight: bold;
+                font-weight: 600;
                 font-size: 1.5rem;
             }
             span.subtitle{
+                font-weight: 500;
                 display: block;
                 color:var(--noi-text-primary, black);
                 font-size: 0.875rem;
@@ -2655,7 +2704,7 @@ export default {
             
             .title{
                 font-size: 1.125rem;
-                font-weight:bold;
+                font-weight:600;
                 color:var(--noi-text-primary, black);
                 width: 100%;
                 display: block;
@@ -2679,7 +2728,7 @@ export default {
                         width: min-content;
                         padding: 0.53rem 1rem;
                         text-align: center;
-                        font-weight: bold;
+                        font-weight: 600;
                         font-size: 1.3rem;
                         cursor: pointer;
                         
@@ -2693,7 +2742,7 @@ export default {
                         }
                         
                         span{
-                            font-weight: normal;
+                            font-weight: 400;
                             font-size: 0.9rem;
                             display: block;
                         }
@@ -2743,7 +2792,7 @@ export default {
                             margin:1.1rem 0 0.6rem 0;
                         }
                         span{   
-                            font-weight: bold;
+                            font-weight: 600;
                             font-size: 0.9rem;
                         }
                     }
@@ -2751,7 +2800,7 @@ export default {
                         margin-top:0.5rem;
                         
                         span,div{
-                            font-weight: bold;
+                            font-weight: 600;
                             &.hour{
                                 display: block;
                                 padding-bottom: 0.5rem;
@@ -2769,7 +2818,7 @@ export default {
                             height: 1.3125rem;
                             font-size: 0.725rem;
                             padding-top: 0.2rem;
-                            font-weight: bold;
+                            font-weight: 500;
                         }
 
                         &.departure{
@@ -2854,7 +2903,7 @@ export default {
                             }
                         }
                         span{
-                            font-weight: bold;
+                            font-weight: 600;
                             font-size: 0.9rem;
                             position: relative;
                             top:0.5rem;
@@ -2864,11 +2913,11 @@ export default {
                         }
                     }
                     .noi-flight-row-flight-number{
-                        font-weight: bold;
+                        font-weight: 600;
                         padding-top: 0.75rem;
                     }
                     .noi-flight-row-status{
-                        font-weight: bold;
+                        font-weight: 600;
 
                         .status{
                             font-size: 1.2rem;
@@ -2882,8 +2931,11 @@ export default {
                     }
                     .noi-flight-row-button{
                         text-align: center;
-                        font-weight: bold;
-                        margin-top:0.5rem;   
+                        margin-top:0.5rem; 
+                        
+                        .button{
+                            font-weight: 500;
+                        }
                     }
                 }
                 }
@@ -2947,13 +2999,13 @@ export default {
             right: 12rem;
             background: white;
             padding: 0 1rem;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.5rem;
         }
 
         .selection{
             font-size: 1.125rem;
-            font-weight: bold;
+            font-weight: 600;
             margin: 0.9rem 0;
             display: inline;
             float: left;
@@ -2980,12 +3032,12 @@ export default {
                 display: block;
             }
             span.title{
-                font-weight: bold;
+                font-weight: 600;
                 font-size: 1.25rem;
                 display: inline-block;
             }
             span.subtitle{
-                font-weight: normal;
+                font-weight: 500;
                 font-size: 0.875rem;
                 display: inline-block;
                 padding: 0 0 0 1rem;
@@ -3201,9 +3253,9 @@ export default {
         text-decoration: none;
         display: inline-block;
         font-size: 1.5rem;
-        font-weight: bold;
+        font-weight: 600;
         width: 100%;
-        max-width: 8rem;
+        max-width: 9rem;
         border-radius: 0.25rem;
 
         &.dark{
