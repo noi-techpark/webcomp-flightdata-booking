@@ -17,51 +17,54 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <!-- 
                 @blur="onBlur" -->
 
-        <div ref="dropdownContainer" class="passengers-dropdown-container text-left" v-bind:class="classObject"> <!-- @blur="onBlur" -->
-            <h3>{{ placeholder }}</h3>
-            <div class="passengers-dropdown-rows">
-                <div class="row passengers-dropdown-row">
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" :class="{disabled: selection.values.adults <= 1}" @click.stop="change('adults',-1)">-</div>
-                    </div> 
-                    <div class="col-6 text-center">
-                        {{ selection.values.adults }} <span v-if="selection.values.adults <= 1">{{ $parent.$t("adult") }}</span><span v-else>{{ $parent.$t("adults") }}</span><br/>
-                        <span class="subtitle">{{ $parent.$t("ages11") }}</span>
+        <div class="passengers-dropdown-container text-left" v-bind:class="classObject"> <!-- @blur="onBlur" -->
+            <div ref="dropdownContainer" class="passengers-dropdown-inner-container">
+                <h3>{{ placeholder }}</h3>
+                <div class="passengers-dropdown-rows">
+                    <div class="row passengers-dropdown-row">
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" :class="{disabled: selection.values.adults <= 1}" @click.stop="change('adults',-1)">-</div>
+                        </div> 
+                        <div class="col-6 text-center">
+                            {{ selection.values.adults }} <span v-if="selection.values.adults <= 1">{{ $parent.$t("adult") }}</span><span v-else>{{ $parent.$t("adults") }}</span><br/>
+                            <span class="subtitle">{{ $parent.$t("ages11") }}</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" @click.stop="change('adults',+1)">+</div>
+                        </div> 
                     </div>
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" @click.stop="change('adults',+1)">+</div>
-                    </div> 
-                </div>
-                <div class="row passengers-dropdown-row">
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" :class="{disabled: selection.values.children <= 0}" @click.stop="change('children',-1)">-</div>
-                    </div> 
-                    <div class="col-6 text-center">
-                        {{ selection.values.children }} <span v-if="selection.values.children <= 1">{{ $parent.$t("child") }}</span><span v-else>{{ $parent.$t("children") }}</span><br/>
-                        <span class="subtitle">{{ $parent.$t("ages2-11") }}</span>
+                    <div class="row passengers-dropdown-row">
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" :class="{disabled: selection.values.children <= 0}" @click.stop="change('children',-1)">-</div>
+                        </div> 
+                        <div class="col-6 text-center">
+                            {{ selection.values.children }} <span v-if="selection.values.children <= 1">{{ $parent.$t("child") }}</span><span v-else>{{ $parent.$t("children") }}</span><br/>
+                            <span class="subtitle">{{ $parent.$t("ages2-11") }}</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" @click.stop="change('children',+1)">+</div>
+                        </div> 
                     </div>
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" @click.stop="change('children',+1)">+</div>
-                    </div> 
-                </div>
-                <div class="row passengers-dropdown-row">
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" :class="{disabled: selection.values.infants <= 0}" @click.stop="change('infants',-1)">-</div>
-                    </div> 
-                    <div class="col-6 text-center">
-                        {{ selection.values.infants }} <span v-if="selection.values.infants <= 1">{{ $parent.$t("infant") }}</span><span v-else>{{ $parent.$t("infants") }}</span><br/>
-                        <span class="subtitle">{{ $parent.$t("ages2") }}</span>
+                    <div class="row passengers-dropdown-row">
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" :class="{disabled: selection.values.infants <= 0}" @click.stop="change('infants',-1)">-</div>
+                        </div> 
+                        <div class="col-6 text-center">
+                            {{ selection.values.infants }} <span v-if="selection.values.infants <= 1">{{ $parent.$t("infant") }}</span><span v-else>{{ $parent.$t("infants") }}</span><br/>
+                            <span class="subtitle">{{ $parent.$t("ages2") }}</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="passengers-plus-minus" @click.stop="change('infants',+1)">+</div>
+                        </div> 
                     </div>
-                    <div class="col-3 text-center">
-                        <div class="passengers-plus-minus" @click.stop="change('infants',+1)">+</div>
-                    </div> 
                 </div>
             </div>
         </div>
-        
+            
         <label :for="name" class="form-label">
             {{ placeholder }}
         </label>
+
     </div>
 
 </template>
@@ -155,65 +158,74 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     $grey: #e0e0e0;
 
     .passengers-dropdown-container{
-        display: none;
-        border: 1px solid $grey;
-        background: white;
-        border-radius: 5px;    
-        width: calc(90%);
+        display: none; 
+        width: 100%;
         height: auto;
-        max-height: 30vh;
-        padding: 0;
-        margin: 1rem calc(10%/2);
+        max-height: 35vh;
+        padding: 0 0 5rem 0;
+        margin: 0;
         position: absolute;
-        overflow: auto;
+        overflow: none;
 
-        h3{
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: white;
-            padding: 0.5rem;
-        }
 
-        .passengers-dropdown-rows{
+        .passengers-dropdown-inner-container{
+            border-radius: 5px;   
+            border: 1px solid $grey;
             background: white;
-            border: 1px solid $lightgrey;
-            border-width:0 1px 1px;
-            cursor: pointer;
-            display: block;
-            transition: background 0.2s ease-out;
-            top:0;
-            left:0;
-            width:100%;
-            padding: 10px 30px;
-            
-            .passengers-dropdown-row{
-                margin-bottom: 1rem;
-            }
-           
-            &.clusterParent{
+            height: 100%;
+            max-width: 20rem; 
+            width: calc(90%);
+            margin: 1rem auto;
+
+            h3{
+                font-size: 1.2rem;
                 font-weight: bold;
-            }
-            
-            span.subtitle{
-                font-size: 0.7rem;
-                color: gray; 
+                background: white;
+                padding: 0.5rem;
             }
 
-            .passengers-plus-minus{    
-                border: 2px solid black;
-                border-radius: 15px;
-                width: 30px;
-                height: 30px;
-                text-align: center;
-                padding: 0.1rem;
-                margin:0 auto;
+            .passengers-dropdown-rows{
+                background: white;
+                border: 1px solid $lightgrey;
+                border-width:0 1px 1px;
                 cursor: pointer;
-            }
-            .passengers-plus-minus.disabled{    
-                opacity:0.5;
-                cursor:auto;
+                display: block;
+                transition: background 0.2s ease-out;
+                top:0;
+                left:0;
+                width:100%;
+                padding: 10px 30px;
+                
+                .passengers-dropdown-row{
+                    margin-bottom: 1rem;
+                }
+            
+                &.clusterParent{
+                    font-weight: bold;
+                }
+                
+                span.subtitle{
+                    font-size: 0.7rem;
+                    color: gray; 
+                }
+
+                .passengers-plus-minus{    
+                    border: 2px solid black;
+                    border-radius: 15px;
+                    width: 30px;
+                    height: 30px;
+                    text-align: center;
+                    padding: 0.1rem;
+                    margin:0 auto;
+                    cursor: pointer;
+                }
+                .passengers-plus-minus.disabled{    
+                    opacity:0.5;
+                    cursor:auto;
+                }
             }
         }
+
         &.open{
             display: block;
         }
