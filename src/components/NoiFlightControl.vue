@@ -57,8 +57,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </div>
                         
                         <div class="noi-swap-icon" @click="swapAirports()">
-                            <img v-if="options.theme == 'skyalps'" src="https://third-party.opendatahub.com/webcomp-flightdata-realtime/src/assets/icons/change-airports-order-icon-blue.svg" />
-                            <img v-else src="https://third-party.opendatahub.com/webcomp-flightdata-realtime/src/assets/icons/change-airports-order-icon.svg" />
+                            <img v-if="options.theme == 'skyalps'" src="https://third-party.opendatahub.com/webcomp-flightdata-booking/src/assets/icons/change-airports-order-icon-blue.svg" />
+                            <img v-else src="https://third-party.opendatahub.com/webcomp-flightdata-booking/src/assets/icons/change-airports-order-icon.svg" />
                         </div>
                         
                         <div class="noi-col-6 noi-col-mob-12">
