@@ -506,7 +506,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     </div>
 
     <!-- mobile -->
-    <div class="container-fluid noi-selection-bar" v-if="showResults && isMobile && (!isShownBookButtons || !isMobileSummaryOpen)" :class="{oneway:!isRoundTrip, 'is-mobile-summary-open':isMobileSummaryOpen}" >
+    <div class="container-fluid noi-selection-bar" v-if="showResults && isMobile && (!isShownBookButtons || !isMobileSummaryOpen)" :class="{'is-mobile-summary-open':isMobileSummaryOpen}" >
         <div class="row pb-1">
             <div class="col text-center">
                 <div @click="toggleMobileSummary()">
@@ -580,7 +580,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </div>
                         <div><Icon icon="bxs:user"/> {{ getSearchPeopleCount() }}</div>
 
-                        <a :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home" v-if="((!isRoundTrip && selectedFlights.outward) || (selectedFlights.return)) && selectionNeedsTwoTickets">
+                        <a :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home" v-if="((!isRoundTrip && selectedFlights.outward) || (selectedFlights.return && selectionNeedsTwoTickets))">
                             <div class="button selected continue-button book-on">
                                 <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }} <Icon icon="mdi:arrow-up" rotate="90deg"></Icon>
                             </div>
@@ -595,40 +595,42 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <strong>{{ $t("selectFirstFlight") }}</strong>
                     </div>
                 </div>
-                <div class="row flight-container pb-3 pt-3" v-if="selectedFlights.return">
-                    <div class="col-2 flight-icon"> 
-                        <img v-if="options.theme == 'skyalps'" :src="require('@/assets/icons/plane-big-blue.png')" height="24px" class="rotate"/>
-                        <img v-else :src="require('@/assets/icons/plane-big-black.png')" height="24px" class="rotate"/>
-                    </div>
-                    <div class="col flight-description">
-                        <div class="title">{{ $t("from") }} {{ selectedFlights.return.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.return.arrival.airport.name }}</div>
-                        <div class="text">
-                            {{ asZoneDate(selectedFlights.return.departure.date,"UTC",selectedFlights.return.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.return.departure.time)}} - {{asZoneTime(selectedFlights.return.arrival.time)}}
+                <div v-if="isRoundTrip">
+                    <div class="row flight-container pb-3 pt-3" v-if="selectedFlights.return">
+                        <div class="col-2 flight-icon"> 
+                            <img v-if="options.theme == 'skyalps'" :src="require('@/assets/icons/plane-big-blue.png')" height="24px" class="rotate"/>
+                            <img v-else :src="require('@/assets/icons/plane-big-black.png')" height="24px" class="rotate"/>
                         </div>
-                        <div><Icon icon="bxs:user"/> {{ getSearchPeopleCount() }}</div>
-
-                        <a :href="selectedAirlineLink('return')" target="_blank" title="Skyalps Home" v-if="(selectedFlights.return && selectionNeedsTwoTickets)">
-                            <div class="button selected continue-button book-on" >
-                                <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }} <Icon icon="mdi:arrow-up" rotate="90deg"></Icon>
+                        <div class="col flight-description">
+                            <div class="title">{{ $t("from") }} {{ selectedFlights.return.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.return.arrival.airport.name }}</div>
+                            <div class="text">
+                                {{ asZoneDate(selectedFlights.return.departure.date,"UTC",selectedFlights.return.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.return.departure.time)}} - {{asZoneTime(selectedFlights.return.arrival.time)}}
                             </div>
-                        </a>
-
-                        <a :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home" v-if="!selectionNeedsTwoTickets && ((!isRoundTrip && selectedFlights.outward) || (selectedFlights.return))">
-                            <div class="button selected continue-button book-on">
-                                <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }} <Icon icon="mdi:arrow-up" rotate="90deg"></Icon>
-                            </div>
-                        </a>
+                            <div><Icon icon="bxs:user"/> {{ getSearchPeopleCount() }}</div>
+    
+                            <a :href="selectedAirlineLink('return')" target="_blank" title="Skyalps Home" v-if="(selectedFlights.return && selectionNeedsTwoTickets)">
+                                <div class="button selected continue-button book-on" >
+                                    <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }} <Icon icon="mdi:arrow-up" rotate="90deg"></Icon>
+                                </div>
+                            </a>
+    
+                            <a :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home" v-if="!selectionNeedsTwoTickets && ((!isRoundTrip && selectedFlights.outward) || (selectedFlights.return))">
+                                <div class="button selected continue-button book-on">
+                                    <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }} <Icon icon="mdi:arrow-up" rotate="90deg"></Icon>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3 flight-price">
+                            {{ getFormattedFlightRate(selectedFlights.return) }}
+                        </div>
                     </div>
-                    <div class="col-3 flight-price">
-                        {{ getFormattedFlightRate(selectedFlights.return) }}
+                    <div class="row flight-container" v-else>
+                        <div class="col flight-description pt-1 pb-1">
+                            <strong>{{ $t("selectSecondFlight") }}</strong>
+                        </div>
                     </div>
+                    
                 </div>
-                <div class="row flight-container" v-else>
-                    <div class="col flight-description pt-1 pb-1">
-                        <strong>{{ $t("selectSecondFlight") }}</strong>
-                    </div>
-                </div>
-                
             </div>
         </div>
         <div class="row">
@@ -2956,6 +2958,7 @@ export default {
         bottom: 0;
         z-index: 2;
 
+        
         &.oneway{
             height: 4.25rem;
 
@@ -2988,6 +2991,7 @@ export default {
                 }
             }
         }
+        
 
         .total-price-container{
             position: relative;
