@@ -270,7 +270,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <div v-else>
                     <div class="noi-flights-any-result">
                         <p><strong>{{ $t("anyResult.title") }}</strong></p>
-                        <p>{{ $t("anyResult.description") }} <strong><u>{{ $t("anyResult.descriptionBold") }}</u></strong>.</p>
+                        <p>{{ $t("anyResult.description") }} <strong @click="stepBack()" style="cursor: pointer;"><u>{{ $t("anyResult.descriptionBold") }}</u></strong>.</p>
                     </div>
                 </div>
             </div>
@@ -412,7 +412,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <div v-else>
                     <div class="noi-flights-any-result">
                         <p><strong>{{ $t("anyResult.title") }}</strong></p>
-                        <p>{{ $t("anyResult.description") }} <strong><u>{{ $t("anyResult.descriptionBold") }}</u></strong>.</p>
+                        <p>{{ $t("anyResult.description") }} <strong @click="stepBack()" style="cursor: pointer;"><u>{{ $t("anyResult.descriptionBold") }}</u></strong>.</p>
                     </div>
                 </div>
             </div>
