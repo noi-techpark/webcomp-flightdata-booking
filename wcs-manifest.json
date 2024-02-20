@@ -1,6 +1,6 @@
 {
-  "title": "Flightdata booking",
-  "shortName": "Flightdata booking",
+  "title": "Webcomponent: Flightdata booking",
+  "shortName": "flightdata-booking",
   "description": "A webcomponent that manage flightdata booking process & Skyalps flights",
   "descriptionAbstract": "A webcomponent that manage flightdata booking process & Skyalps flights",
   "license": "AGPL-3.0-or-later",
