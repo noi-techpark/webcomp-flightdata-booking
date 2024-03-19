@@ -23,9 +23,7 @@
   ],
   "image": "wcs-logo.png",
   "searchTags": [
-    "booking",
-    "flights",
-    "skyalps"
+    "flights"
   ],
   "dist": {
     "basePath": "dist",
