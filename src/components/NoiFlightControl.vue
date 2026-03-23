@@ -201,7 +201,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <div class="col-lg-7 lg-only">
                             <div class="row">
                                 <div class="col-lg-3 noi-flight-row-airport departure">
-                                    <div class="hour">{{ asZoneTime(flight.departure.time) }}</div>
+                                    <div class="hour">{{ flight.departure.time }}</div>
                                     <div><div class="noi-flight-row-badge">{{ flight.departure.airport.iataCode }}</div> <span>{{ flight.departure.airport.name }}</span></div><br/>
                                 </div>
                                 <div class="col-lg-6 noi-flight-row-path">
@@ -216,7 +216,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     <span class="type">{{ $t("direct") }}</span>
                                 </div>
                                 <div class="col-lg-3 noi-flight-row-airport arrival">
-                                    <div class="hour">{{ asZoneTime(flight.arrival.time) }}</div>
+                                    <div class="hour">{{ flight.arrival.time }}</div>
                                     <div><div class="noi-flight-row-badge">{{ flight.arrival.airport.iataCode }}</div> <span>{{ flight.arrival.airport.name }}</span></div><br/>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <div class="col sm-only">
                             <div class="row">
                                 <div class="col-3 noi-flight-row-airport departure">
-                                    <div class="hour">{{ asZoneTime(flight.departure.time) }}</div>
+                                    <div class="hour">{{ flight.departure.time }}</div> 
                                     <div><span>{{ flight.departure.airport.name }}<br/>({{ flight.departure.airport.iataCode }})</span></div><br/>    
                                 </div>
                                 <div class="col-6 p-0">
@@ -253,7 +253,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     </div>
                                 </div>
                                 <div class="col-3 noi-flight-row-airport arrival">
-                                    <div class="hour">{{ asZoneTime(flight.arrival.time) }}</div>
+                                    <div class="hour">{{ flight.arrival.time }}</div>
                                     <div><span>{{ flight.arrival.airport.name }}<br/>({{ flight.arrival.airport.iataCode }})</span></div><br/>
                                 </div> 
                             </div>
@@ -343,7 +343,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <div class="col-lg-7 lg-only">
                             <div class="row">
                                 <div class="col-lg-3 noi-flight-row-airport departure">
-                                    <div class="hour">{{ asZoneTime(flight.departure.time) }}</div>
+                                    <div class="hour">{{ flight.departure.time }}</div>
                                     <div><div class="noi-flight-row-badge">{{ flight.departure.airport.iataCode }}</div> <span>{{ flight.departure.airport.name }}</span></div><br/>
                                 </div>
                                 <div class="col-lg-6 noi-flight-row-path">
@@ -358,7 +358,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     <span class="type">{{ $t("direct") }}</span>
                                 </div>
                                 <div class="col-lg-3 noi-flight-row-airport arrival">
-                                    <div class="hour">{{ asZoneTime(flight.arrival.time) }}</div>
+                                    <div class="hour">{{ flight.arrival.time }}</div>
                                     <div><div class="noi-flight-row-badge">{{ flight.arrival.airport.iataCode }}</div> <span>{{ flight.arrival.airport.name }}</span></div><br/>
                                 </div>
                             </div>
@@ -439,7 +439,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     <div class="description">
                                         <span class="title">{{ $t("from") }} {{ selectedFlights.outward.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.outward.arrival.airport.name }}</span>
                                         <span class="subtitle">
-                                            {{ asZoneDate(selectedFlights.outward.departure.date,"UTC",selectedFlights.outward.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.outward.departure.time)}}, {{passengers.label}}
+                                            {{ formatDisplayDate(selectedFlights.outward.departure.date,"EEE dd MMM") }}, {{ selectedFlights.outward.departure.time }}, {{passengers.label}}
                                         </span>
                                         <span class="subtitle" v-if="isRoundTrip">{{ getFormattedFlightRate(selectedFlights.outward) }}</span>
                                     </div>
@@ -448,10 +448,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </div>
 
                         <div class="col-lg-2 total-price-container">
-                            <!-- total -->
+                            <!-- total 
+
                             <div class="price" v-if="selectedFlights.outward || selectedFlights.return">
                                 {{ $t("total") }} {{ getTotalPrice }}    
                             </div>
+
+                            -->
+
                             
                             <!-- button -->
                             <a  :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home">
@@ -483,7 +487,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     <div class="description">
                                         <span class="title">{{ $t("from") }} {{ selectedFlights.return.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.return.arrival.airport.name }}</span>
                                         <span class="subtitle">
-                                            {{ asZoneDate(selectedFlights.return.departure.date,"UTC",selectedFlights.return.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.return.departure.time)}}, {{passengers.label}}
+                                           {{ formatDisplayDate(selectedFlights.return.departure.date,"EEE dd MMM") }}, {{ selectedFlights.return.departure.time }}, {{passengers.label}}
                                         </span>                       
                                         <span class="subtitle" v-if="isRoundTrip">{{ getFormattedFlightRate(selectedFlights.return) }}</span>         
                                     </div>
@@ -576,7 +580,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <div class="col flight-description">
                         <div class="title">{{ $t("from") }} {{ selectedFlights.outward.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.outward.arrival.airport.name }}</div>
                         <div class="text">
-                            {{ asZoneDate(selectedFlights.outward.departure.date,"UTC",selectedFlights.outward.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.outward.departure.time)}} - {{asZoneTime(selectedFlights.outward.arrival.time)}}
+                            {{ formatDisplayDate(selectedFlights.outward.departure.date,"EEE dd MMM") }}, {{ selectedFlights.outward.departure.time }} - {{ selectedFlights.outward.arrival.time }}
                         </div>
                         <div><Icon icon="bxs:user"/> {{ getSearchPeopleCount() }}</div>
 
@@ -604,7 +608,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <div class="col flight-description">
                             <div class="title">{{ $t("from") }} {{ selectedFlights.return.departure.airport.name }} {{ $t("to") }} {{ selectedFlights.return.arrival.airport.name }}</div>
                             <div class="text">
-                                {{ asZoneDate(selectedFlights.return.departure.date,"UTC",selectedFlights.return.departure.time,"EEE dd MMM")}}, {{asZoneTime(selectedFlights.return.departure.time)}} - {{asZoneTime(selectedFlights.return.arrival.time)}}
+                                {{ formatDisplayDate(selectedFlights.return.departure.date,"EEE dd MMM") }}, {{ selectedFlights.return.departure.time }} - {{ selectedFlights.return.arrival.time }}
                             </div>
                             <div><Icon icon="bxs:user"/> {{ getSearchPeopleCount() }}</div>
     
@@ -832,45 +836,106 @@ export default {
       this.max_entries[what] += this.options.maxforecast
     },
     selectedAirlineLink(route) {
-        if(!this.selectedFlights.outward || (this.isRoundTrip && !this.selectedFlights.return)){
-            return "";
-        }
+    if (!this.selectedFlights.outward) {
+        return "";
+    }
 
-        // https://booking.skyalps.com/flight-results/FCO-VRN/2023-12-05/NA/2/0/0
-        let outwardDate = DateTime.fromFormat(this.selectedFlights[route].departure.date, "yyyy-LL-dd", "UTC").toFormat("yyyy-LL-dd")
-        let airports = this.selectedFlights[route].departure.airport.iataCode + "-" + this.selectedFlights[route].arrival.airport.iataCode
-        let passangersAdults = this.passengers.value.adults
-        let passangersChildren = this.passengers.value.children
-        let passangersInfant = this.passengers.value.infants;
-        if(this.passengers.value.infants){
-            passangersInfant = this.passengers.value.infants
-        }
-        
-        let returnDate = "NA";
-        if(this.isRoundTrip && !this.selectionNeedsTwoTickets){
-            // https://booking.skyalps.com/flight-results/FCO-VRN/2023-12-06/2023-12-08/2/0/0
-            returnDate = DateTime.fromFormat(this.selectedFlights.return.departure.date, "yyyy-LL-dd", "UTC").toFormat("yyyy-LL-dd")
-        }
-       
-        let link = "https://booking.skyalps.com/flight-results/" + airports + "/" + outwardDate + "/"+ returnDate +"/"+passangersAdults+"/"+passangersChildren+"/"+passangersInfant
-        return link
-    },
-    asZoneTime(time = "00:00", source_zone = "UTC") {
-        if (time == "") return ""
-        let datetime = DateTime.fromFormat(time, "T", {
-            zone: source_zone
-        })
-        datetime = datetime.setZone(this.current_timezone)
-        return datetime.toFormat("HH:mm")
-    },
-    asZoneDate(date = "2022-01-01", source_zone = "UTC", time = "00:00",outputFormat = "EEE, dd MMM") {
-        if (date == "") return ""
-        let datetime = DateTime.fromFormat(date + " " + time, "yyyy-LL-dd T", {
-            zone: source_zone
-        })
-        datetime = datetime.setZone(this.current_timezone)
-        return datetime.toFormat(outputFormat)
-    },
+    if (this.isRoundTrip && !this.selectedFlights.return && !this.selectionNeedsTwoTickets) {
+        return "";
+    }
+
+    const outward = this.selectedFlights.outward;
+    const returnFlight = this.selectedFlights.return;
+
+    const depPort = route === "return"
+        ? this.selectedFlights.return.departure.airport.iataCode
+        : outward.departure.airport.iataCode;
+
+    const arrPort = route === "return"
+        ? this.selectedFlights.return.arrival.airport.iataCode
+        : outward.arrival.airport.iataCode;
+
+    const departureDate = DateTime.fromFormat(
+        route === "return" ? returnFlight.departure.date : outward.departure.date,
+        "yyyy-LL-dd",
+        { zone: "utc" }
+    ).toFormat("dd LLL yyyy");
+
+    let url = "https://book-skyalps.crane.aero/ibe/availability";
+    let params = new URLSearchParams();
+
+    params.set("tripType", this.isRoundTrip && !this.selectionNeedsTwoTickets ? "ROUND_TRIP" : "ONE_WAY");
+    params.set("depPort", depPort);
+    params.set("arrPort", arrPort);
+    params.set("departureDate", departureDate);
+    params.set("currency", "EUR");
+    params.set("lang", (this.currentLanguage || "en").toLowerCase());
+
+    if (this.isRoundTrip && !this.selectionNeedsTwoTickets && returnFlight) {
+        const returnDate = DateTime.fromFormat(
+            returnFlight.departure.date,
+            "yyyy-LL-dd",
+            { zone: "utc" }
+        ).toFormat("dd LLL yyyy");
+
+        params.set("returnDate", returnDate);
+    }
+
+    params.set("passengerQuantities[0][passengerType]", "ADLT");
+    params.set("passengerQuantities[0][quantity]", String(this.passengers.value.adults || 0));
+
+    params.set("passengerQuantities[1][passengerType]", "CHLD");
+    params.set("passengerQuantities[1][quantity]", String(this.passengers.value.children || 0));
+
+    params.set("passengerQuantities[2][passengerType]", "INFT");
+    params.set("passengerQuantities[2][quantity]", String(this.passengers.value.infants || 0));
+
+    return `${url}?${params.toString()}`;
+},
+    asZoneTime(time = "00:00:00", source_zone = "UTC") {
+    if (!time) return "";
+
+    let format = "HH:mm:ss";
+    if (/^\d{2}:\d{2}$/.test(time)) {
+        format = "HH:mm";
+    }
+
+    let datetime = DateTime.fromFormat(time, format, {
+        zone: source_zone
+    });
+
+    if (!datetime.isValid) return "";
+
+    datetime = datetime.setZone(this.current_timezone);
+    return datetime.toFormat("HH:mm");
+},
+   asZoneDate(date = "2022-01-01", source_zone = "UTC", time = "00:00:00", outputFormat = "EEE, dd MMM") {
+    if (!date) return "";
+
+    let format = "yyyy-LL-dd HH:mm:ss";
+    if (/^\d{2}:\d{2}$/.test(time)) {
+        format = "yyyy-LL-dd HH:mm";
+    }
+
+    let datetime = DateTime.fromFormat(`${date} ${time}`, format, {
+        zone: source_zone
+    });
+
+    if (!datetime.isValid) return "";
+
+    datetime = datetime.setZone(this.current_timezone);
+    return datetime.toFormat(outputFormat);
+},
+
+formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
+    if (!date) return "";
+
+    const dt = DateTime.fromFormat(date, "yyyy-MM-dd");
+    if (!dt.isValid) return "";
+
+    return dt.toFormat(outputFormat);
+},
+
     updateTime() {
         let time = DateTime.utc()
         time = time.setZone(this.current_timezone)
@@ -1009,238 +1074,160 @@ export default {
         }
         return where += condition;
     },  
-    parseData: function(data){
-        let parsedData = {};
-        for(let i = 0; i< data.data.data.length; i++){
-            let o = data.data.data[i];
-            let datetime = DateTime.fromFormat(o.smetadata.fltsfromperiod + " " + o.smetadata.std, "yyyy-LL-dd T",{ zone: "UTC" })
+   parseData: function(data, departureFilter = null, arrivalFilter = null, selectedDate = null) {
+    let parsedData = {};
+    let items = data?.data?.Items || [];
 
-            let rate = false;
-            // let rate =  o.smetadata.fares ? o.smetadata.fares["SKY_LIGHT"] : null
-            if(o.smetadata.fares){
-                for(var key in o.smetadata.fares){
-                    let f = o.smetadata.fares[key]; 
-                    let rawRate =
-                        f.fare.adultFareOW +
-                        f.fare.tax1OW +
-                        f.fare.tax2OW +
-                        f.fare.tax3OW +
-                        f.fare.tax4OW
+    let selectedDateStr = null;
+    if (selectedDate) {
+        selectedDateStr = DateTime.fromJSDate(selectedDate).toFormat("yyyy-MM-dd");
+    }
 
-                    if(rate === false || rawRate<rate){
-                        rate = rawRate;
-                    }
+    for (let i = 0; i < items.length; i++) {
+        let o = items[i];
+
+        if (!o.StopTimes || o.StopTimes.length < 2) {
+            continue;
+        }
+
+        const departureStop = o.StopTimes[0];
+        const arrivalStop = o.StopTimes[o.StopTimes.length - 1];
+
+        const departureCode = departureStop.Shortname || "";
+        const arrivalCode = arrivalStop.Shortname || "";
+
+        if (departureFilter) {
+            const allowedDepartureCodes = departureFilter.split("|");
+            if (!allowedDepartureCodes.includes(departureCode)) {
+                continue;
+            }
+        }
+
+        if (arrivalFilter) {
+            const allowedArrivalCodes = arrivalFilter.split("|");
+            if (!allowedArrivalCodes.includes(arrivalCode)) {
+                continue;
+            }
+        }
+
+        const departureRaw = departureStop.DepartureTime || "";
+        const arrivalRaw = arrivalStop.ArrivalTime || "";
+
+        const departureDT = DateTime.fromISO(departureRaw, { zone: "utc" });
+        const arrivalDT = DateTime.fromISO(arrivalRaw, { zone: "utc" });
+
+        const departureDate = departureRaw.substring(0, 10);
+        const departureTime = departureRaw.substring(11, 16);
+        const arrivalDate = arrivalRaw.substring(0, 10);
+        const arrivalTime = arrivalRaw.substring(11, 16);
+
+        if (selectedDateStr && departureDate !== selectedDateStr) {
+            continue;
+        }
+
+        let obj = {
+            key: o.Id,
+            departure: {
+                date: departureDate,
+                time: departureTime,
+                timestamp: Math.floor(departureDT.toSeconds()),
+                airport: {
+                    iataCode: departureCode,
+                    name: departureStop?.Detail?.en?.Title || departureCode,
+                    coordinates: departureStop?.Geo?.position
+                        ? [departureStop.Geo.position.Latitude, departureStop.Geo.position.Longitude]
+                        : null
                 }
-            }
+            },
+            arrival: {
+                date: arrivalDate,
+                time: arrivalTime,
+                timestamp: Math.floor(arrivalDT.toSeconds()),
+                airport: {
+                    iataCode: arrivalCode,
+                    name: arrivalStop?.Detail?.en?.Title || arrivalCode,
+                    coordinates: arrivalStop?.Geo?.position
+                        ? [arrivalStop.Geo.position.Latitude, arrivalStop.Geo.position.Longitude]
+                        : null
+                }
+            },
+            status: "SCHEDULED",
+            company: o?.Agency?.Shortname || o?.Source || "",
+            routeCode: o?.Shortname || o?.Route?.Shortname || "",
+            tripId: o?.Mapping?.skyalps?.TripID || null,
+            rates: null
+        };
 
-            if (isNaN(rate) || rate == 0) rate = false
+        obj.flightInfo = this.getFlightInfo(obj);
 
-            //check for airports map
-            if(!this.airports[o.smetadata.fromdestination]){
-                console.log("Error: any departure airport named '"+o.smetadata.fromdestination+"' has been found in mapping.")
-            }
-            if(!this.airports[o.smetadata.todestination]){
-                console.log("Error: any arrival airport named '"+o.smetadata.todestination+"' has been found in mapping.")
-            }
-
-            let obj = {
-                departure:{
-                    date:o.smetadata.fltsfromperiod.replace(/\//g, "-"),
-                    time:o.smetadata.std,
-                    timestamp:o.smetadata.departure_timestamp,
-                    airport:{
-                        iataCode:o.smetadata.fromdestination,
-                        name:this.airports[o.smetadata.fromdestination].name,
-                        coordinates:this.airports[o.smetadata.fromdestination].pos
-                    }
-                },
-                arrival:{
-                    date:o.smetadata.fltstoperiod.replace(/\//g, "-"),
-                    time:o.smetadata.sta,
-                    timestamp:o.smetadata.arrival_timestamp,
-                    airport:{
-                        iataCode:o.smetadata.todestination,
-                        name:this.airports[o.smetadata.todestination].name,
-                        coordinates:this.airports[o.smetadata.todestination].pos
-                    }
-                },
-                status: o.smetadata.remark ? o.smetadata.remark : "SCHEDULED",
-                company: o.sorigin,
-                rates: rate ? { basic_adult_oneway_withtaxes: rate } : null
-            }
-
-            let flightInfo = this.getFlightInfo(obj);
-            obj.flightInfo = flightInfo;
-
-            let k = obj.departure.date;
-            if(!parsedData[k]){
-                parsedData[k] = [];
-            }
-            parsedData[k].push(obj)
+        let k = obj.departure.date;
+        if (!parsedData[k]) {
+            parsedData[k] = [];
         }
+        parsedData[k].push(obj);
+    }
 
-        // sort by timestamps
-        for(let k in parsedData){
-            parsedData[k].sort(this.sortByTimestamp)
-        }
-        return parsedData
-    },
-    async getData(whereCondition){
-        //compile get parameters
-        let params = {
-            limit: "-1",
-            offset: "0",
-            shownull: "false",
-            distinct: "true",
-            where: whereCondition,
-            origin: "webcomp-flightdata"
-        }
-        params = new URLSearchParams(params).toString()
-        
-        //make request
-        let data = await axios.get(this.options.rest_endpoint + params)
-        return data;
+    for (let k in parsedData) {
+        parsedData[k].sort((a, b) => a.departure.timestamp - b.departure.timestamp);
+    }
+
+    return parsedData;
+},
+   async getData(paramsObj = {}) {
+    return await axios.get(this.options.rest_endpoint, {
+        params: paramsObj
+    });
     },
     async fetchSchedules(searchData) {
-        try {
+    try {
+        let departureDate = null;
+        let returnDate = null;
 
-            // getting outward flights
-            //adding where conditions
-            let where = ""
-            if(searchData.departureAirport && searchData.departureAirport.value){
-                let els = searchData.departureAirport.value.split("|");
-                let airportOrCondition = "";
-                if(els.length > 1){
-                    airportOrCondition += "or("
-                    for(let i = 0; i<els.length; i++){
-                        if(i > 0){
-                            airportOrCondition += ","
-                        }
-                        airportOrCondition += "smetadata.fromdestination.eq."+els[i]
-                    }
-                    airportOrCondition += ")"
-                }else{
-                    airportOrCondition = "smetadata.fromdestination.eq."+searchData.departureAirport.value+"";
-                }
-                where = this.addWhereCondition(where,airportOrCondition);
+        if (searchData.roundTripCheck == "1") {
+            if (searchData.rangeDate) {
+                if (searchData.rangeDate[0]) departureDate = searchData.rangeDate[0];
+                if (searchData.rangeDate[1]) returnDate = searchData.rangeDate[1];
             }
-            if(searchData.arrivalAirport){
-                let els = searchData.arrivalAirport.value.split("|");
-                let airportOrCondition = "";
-                if(els.length > 1){
-                    airportOrCondition += "or("
-                    for(let i = 0; i<els.length; i++){
-                        if(i > 0){
-                            airportOrCondition += ","
-                        }
-                        airportOrCondition += "smetadata.todestination.eq."+els[i]
-                    }
-                    airportOrCondition += ")"
-                }else{
-                    airportOrCondition = "smetadata.todestination.eq."+searchData.arrivalAirport.value+"";
-                }
-                where = this.addWhereCondition(where,airportOrCondition);
-            }
-
-            // handle dates
-            let departureDate = null;
-            let returnDate = null;
-            if(searchData.roundTripCheck == "1"){
-                if(searchData.rangeDate){
-                    if(searchData.rangeDate[0]){
-                        departureDate = searchData.rangeDate[0];
-                    }
-                    if(searchData.rangeDate[1]){
-                        returnDate = searchData.rangeDate[1];
-                    }
-                }
-            }else{
-                departureDate = searchData.rangeDate;
-            }
-
-            if(departureDate){
-
-                let centerDate = DateTime.fromJSDate(departureDate).startOf('day');
-                this.outwardFlightsSelectedDate = centerDate.toFormat('yyyy-MM-dd');
-
-                let departureDateLower = centerDate.minus({ days: Math.round(this.clusterNumber/2)-1 });
-                let departureDateUpper = centerDate.plus({ days: Math.round(this.clusterNumber/2) });
-                where = this.addWhereCondition(where,"smetadata.departure_timestamp.gt."+departureDateLower.toMillis()/1000);
-                where = this.addWhereCondition(where,"smetadata.departure_timestamp.lt."+departureDateUpper.toMillis()/1000);
-            }else{
-                let now = new Date();
-                where = this.addWhereCondition(where,"smetadata.departure_timestamp.gt."+now.getTime()/1000);
-            }
-            where = "and("+where+")"
-
-            let data = await this.getData(where);
-
-            //parse received data
-            this.outwardFlights = this.parseData(data)
-
-            //getting return flights
-            if(searchData.roundTripCheck == "1"){
-                //adding where conditions
-                where = ""
-
-                if(searchData.departureAirport && searchData.departureAirport.value){
-                    let els = searchData.departureAirport.value.split("|");
-                    let airportOrCondition = "";
-                    if(els.length > 1){
-                        airportOrCondition += "or("
-                        for(let i = 0; i<els.length; i++){
-                            if(i > 0){
-                                airportOrCondition += ","
-                            }
-                            airportOrCondition += "smetadata.todestination.eq."+els[i]
-                        }
-                        airportOrCondition += ")"
-                    }else{
-                        airportOrCondition = "smetadata.todestination.eq."+searchData.departureAirport.value+"";
-                    }
-                    where = this.addWhereCondition(where,airportOrCondition);
-                }
-                if(searchData.arrivalAirport){
-                    let els = searchData.arrivalAirport.value.split("|");
-                    let airportOrCondition = "";
-                    if(els.length > 1){
-                        airportOrCondition += "or("
-                        for(let i = 0; i<els.length; i++){
-                            if(i > 0){
-                                airportOrCondition += ","
-                            }
-                            airportOrCondition += "smetadata.fromdestination.eq."+els[i]
-                        }
-                        airportOrCondition += ")"
-                    }else{
-                        airportOrCondition = "smetadata.fromdestination.eq."+searchData.arrivalAirport.value+"";
-                    }
-                    where = this.addWhereCondition(where,airportOrCondition);
-                }
-
-                if(returnDate){
-                    let centerDate = DateTime.fromJSDate(returnDate).startOf('day');
-                    this.returnFlightsSelectedDate = centerDate.toFormat('yyyy-MM-dd');
-                    let returnDateLower = centerDate.minus({ days: Math.round(this.clusterNumber/2)-1 });
-                    let returnDateUpper = centerDate.plus({ days: Math.round(this.clusterNumber/2) });
-                    where = this.addWhereCondition(where,"smetadata.departure_timestamp.gt."+returnDateLower.toMillis()/1000);
-                    where = this.addWhereCondition(where,"smetadata.departure_timestamp.lt."+returnDateUpper.toMillis()/1000);
-                }else{
-                    let now = new Date();
-                    where = this.addWhereCondition(where,"smetadata.departure_timestamp.gt."+now.getTime()/1000);
-                }
-                where = "and("+where+")"
-
-                data = await this.getData(where);
-
-                //parse received data
-                this.returnFlights = this.parseData(data)
-            }
-
-        } catch (error) {
-            console.error(error)
+        } else {
+            departureDate = searchData.rangeDate;
         }
-    },
+
+        if (departureDate) {
+            let centerDate = DateTime.fromJSDate(departureDate).startOf("day");
+            this.outwardFlightsSelectedDate = centerDate.toFormat("yyyy-MM-dd");
+        }
+
+        if (returnDate) {
+            let centerDate = DateTime.fromJSDate(returnDate).startOf("day");
+            this.returnFlightsSelectedDate = centerDate.toFormat("yyyy-MM-dd");
+        }
+
+        const data = await this.getData({
+            pagesize: 500
+        });
+
+        this.outwardFlights = this.parseData(
+            data,
+            searchData.departureAirport?.value,
+            searchData.arrivalAirport?.value,
+            departureDate
+        );
+
+        if (searchData.roundTripCheck == "1") {
+            this.returnFlights = this.parseData(
+                data,
+                searchData.arrivalAirport?.value,
+                searchData.departureAirport?.value,
+                returnDate
+            );
+        } else {
+            this.returnFlights = {};
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
+},
     sortByTimestamp: function (a, b) {
         if (a.timestamp < b.timestamp) {
             return -1
@@ -1275,60 +1262,56 @@ export default {
         })
     },
     getFormattedFlightRate(flight){
-        if(flight.rates && flight.rates.basic_adult_oneway_withtaxes){
-            return this.formatEuro(flight.rates.basic_adult_oneway_withtaxes);
-        }else{
-            return "-";
-        }
-    },
+    if (flight.rates && flight.rates.basic_adult_oneway_withtaxes) {
+        return this.formatEuro(flight.rates.basic_adult_oneway_withtaxes);
+    }
+    return "Check availability";
+},
     getFlightInfo(data) {
-        let arrivalDate = DateTime.fromMillis(data.sta * 1000, {zone: this.current_timezone})
-        let departureDate = DateTime.fromMillis(data.std * 1000, {zone: this.current_timezone})
-        const arrival_diff = arrivalDate.diff(this.time, ["minutes"]).toObject()["minutes"]
-        const departure_diff = departureDate.diff(this.time, ["minutes"]).toObject()["minutes"]
+    let arrivalDate = DateTime.fromMillis(data.arrival.timestamp * 1000, { zone: this.current_timezone });
+    let departureDate = DateTime.fromMillis(data.departure.timestamp * 1000, { zone: this.current_timezone });
 
-        // landed
-        if (arrival_diff < 0) {
-            return {
-                text: "LANDED",
-                planeLineClass:"end",
-                colorClass: "gray"
-            }
-        }
+    const arrival_diff = arrivalDate.diff(this.time, ["minutes"]).toObject().minutes;
+    const departure_diff = departureDate.diff(this.time, ["minutes"]).toObject().minutes;
 
-        // in flight
-        if (arrival_diff > 0 && departure_diff < 0) {
-            return {
-                text: "IN_FLIGHT",
-                planeLineClass:"middle",
-                colorClass: "green"
-            }
-        }
-        
-        // boarding => departure - 30m
-        if (departure_diff < 30) {
-            return {
-                text: "BOARDING",
-                planeLineClass:"start",
-                colorClass: "green"
-            }
-        }
-
-        // scheduled
-        if (departure_diff > 0) {
-            return {
-                text: "SCHEDULED",
-                planeLineClass:"start",
-                colorClass: "gray"
-            }
-        }
-
+    if (arrival_diff < 0) {
         return {
-            text: "",
-            planeLineClass:"start",
-            colorClass: "yellow"
-        }
-    },
+            text: "LANDED",
+            planeLineClass: "end",
+            colorClass: "gray"
+        };
+    }
+
+    if (arrival_diff > 0 && departure_diff < 0) {
+        return {
+            text: "IN_FLIGHT",
+            planeLineClass: "middle",
+            colorClass: "green"
+        };
+    }
+
+    if (departure_diff < 30) {
+        return {
+            text: "BOARDING",
+            planeLineClass: "start",
+            colorClass: "green"
+        };
+    }
+
+    if (departure_diff > 0) {
+        return {
+            text: "SCHEDULED",
+            planeLineClass: "start",
+            colorClass: "gray"
+        };
+    }
+
+    return {
+        text: "",
+        planeLineClass: "start",
+        colorClass: "yellow"
+    };
+},
     getCalendarElements(what){
         let centerDate = DateTime.now().startOf('day');
         if(this.roundTripCheck == "1"){
