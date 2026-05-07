@@ -56,7 +56,7 @@ export default {
     },
     restendpoint: {
       type: String,
-      default: "https://mobility.api.opendatahub.com/v2/flat%2Cnode/Flight?"
+      default: "https://tourism.api.opendatahub.com/v1/Trip?"
     },
     timezone: {
       type: String,
