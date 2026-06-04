@@ -374,7 +374,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <div class="col sm-only">
                             <div class="row">
                                 <div class="col-3 noi-flight-row-airport departure">
-                                    <div class="hour">{{ asZoneTime(flight.departure.time) }}</div>
+                                    <div class="hour">{{ flight.departure.time }}</div>
                                     <div><span>{{ flight.departure.airport.name }}<br/>({{ flight.departure.airport.iataCode }})</span></div><br/>    
                                 </div>
                                 <div class="col-6 p-0">
@@ -395,7 +395,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     </div>
                                 </div>
                                 <div class="col-3 noi-flight-row-airport arrival">
-                                    <div class="hour">{{ asZoneTime(flight.arrival.time) }}</div>
+                                    <div class="hour">{{ flight.arrival.time }}</div>
                                     <div><span>{{ flight.arrival.airport.name }}<br/>({{ flight.arrival.airport.iataCode }})</span></div><br/>
                                 </div> 
                             </div>
@@ -458,7 +458,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
                             
                             <!-- button -->
-                            <a  :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home">
+                            <a v-if="selectedAirlineLink('outward')" :href="selectedAirlineLink('outward')" target="_blank" title="Skyalps Home">
                                 <div class="button selected continue-button disabled" v-if="(!selectedFlights.outward || (isRoundTrip && !selectedFlights.return))" :class="{double:selectionNeedsTwoTickets}">
                                     {{ $t("continue") }} <Icon v-if="!(!selectedFlights.outward || (isRoundTrip && !selectedFlights.return))" icon="mdi:arrow-up" rotate="90deg"></Icon>
                                 </div>
@@ -497,7 +497,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
                         <div class="col-lg-2">
                             <!-- button -->
-                            <a  :href="selectedAirlineLink('return')" target="_blank" title="Skyalps Home" v-if="selectionNeedsTwoTickets">
+                            <a :href="selectedAirlineLink('return')" target="_blank" title="Skyalps Home" v-if="selectionNeedsTwoTickets && selectedAirlineLink('return')">
                                 <div class="button selected continue-button double" :class="{disabled: (!selectedFlights.outward || !selectedFlights.return)}">
                                     <span>{{ $t("bookOn") }}</span><br/>{{ $t("skyalps") }}  <Icon v-if="!(!selectedFlights.outward || !selectedFlights.return)" icon="mdi:arrow-up" rotate="90deg"></Icon>
                                 </div>
@@ -702,6 +702,116 @@ export default {
 
   //components methods
   methods: {
+
+    //Checking
+
+        checkSkyAlpsDataQuality(items) {
+
+
+            
+    const report = {
+        totalTrips: items.length,
+        missingStopTimes: 0,
+        missingAirportCode: 0,
+        unknownAirportCodes: {},
+        invalidAirportMappings: {},
+        missingCoordinates: 0,
+        invalidCoordinates: 0,
+        invalidTimes: 0,
+        staleFlights: 0,
+        staleFlightsList: [],
+    };
+
+    items.forEach((trip) => {
+        if (!trip.StopTimes || trip.StopTimes.length < 2) {
+        report.missingStopTimes++;
+        return;
+        }
+
+        const stops = [
+        trip.StopTimes[0],
+        trip.StopTimes[trip.StopTimes.length - 1],
+        ];
+
+
+        const departureRaw = stops[0]?.DepartureTime || "";
+        const departureDate = departureRaw.substring(0, 10);
+
+        if (departureDate) {
+        const today = DateTime.now().startOf("day");
+        const flightDay = DateTime.fromISO(departureDate).startOf("day");
+
+        if (departureDate) {
+        const today = DateTime.now().startOf("day");
+        const flightDay = DateTime.fromISO(departureDate).startOf("day");
+
+        if (flightDay < today) {
+            report.staleFlights++;
+
+            report.staleFlightsList.push({
+            id: trip.Id,
+            routeCode: trip.Shortname || trip?.Route?.Shortname || "",
+            departureAirport: stops[0]?.Shortname || "",
+            arrivalAirport: stops[stops.length - 1]?.Shortname || "",
+            departureTime: stops[0]?.DepartureTime || "",
+            arrivalTime: stops[1]?.ArrivalTime || "",
+            });
+        }
+        }
+        }
+
+        stops.forEach((stop) => {
+        const code = stop.Shortname;
+        const lat = stop?.Geo?.position?.Latitude;
+        const lon = stop?.Geo?.position?.Longitude;
+
+                if (this.airports[code]) {
+            const pos = this.airports[code].pos;
+
+            if (!pos || pos.length !== 2 || (pos[0] === 0 && pos[1] === 0)) {
+                report.invalidAirportMappings[code] =
+                (report.invalidAirportMappings[code] || 0) + 1;
+            }
+            }
+
+        if (!code) {
+            report.missingAirportCode++;
+        } else if (!this.airports[code]) {
+            report.unknownAirportCodes[code] =
+            (report.unknownAirportCodes[code] || 0) + 1;
+        }
+
+        if (lat == null || lon == null) {
+            report.missingCoordinates++;
+        } else if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+            report.invalidCoordinates++;
+        }
+
+        if (
+            stop.DepartureTime &&
+            !DateTime.fromISO(stop.DepartureTime).isValid
+        ) {
+            report.invalidTimes++;
+        }
+
+        if (
+            stop.ArrivalTime &&
+            !DateTime.fromISO(stop.ArrivalTime).isValid
+        ) {
+            report.invalidTimes++;
+        }
+        });
+    });
+
+    console.table(report.unknownAirportCodes);
+    console.table(report.invalidAirportMappings);
+    console.table(report);
+
+    return report;
+    },
+    //
+
+
     toggleMobileSummary(){
         if(this.currentMobileStep == 2 && this.isMobileSummaryOpen){
             this.stepBack();
@@ -836,6 +946,22 @@ export default {
       this.max_entries[what] += this.options.maxforecast
     },
     selectedAirlineLink(route) {
+
+    
+
+    const flight = route === "return"
+    ? this.selectedFlights.return
+    : this.selectedFlights.outward;
+
+    if (!flight) {
+        return "";
+    }
+
+    // temporary safety check
+    if (!flight.tripId) {
+        return "";
+    }
+
     if (!this.selectedFlights.outward) {
         return "";
     }
@@ -889,6 +1015,13 @@ export default {
 
     params.set("passengerQuantities[2][passengerType]", "INFT");
     params.set("passengerQuantities[2][quantity]", String(this.passengers.value.infants || 0));
+
+    console.log("CRANE URL", {
+    depPort,
+    arrPort,
+    departureDate,
+    url: `${url}?${params.toString()}`
+    }); 
 
     return `${url}?${params.toString()}`;
 },
@@ -1074,21 +1207,15 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
         }
         return where += condition;
     },  
-   parseData: function(data, departureFilter = null, arrivalFilter = null, selectedDate = null) {
+   parseData: function(data, departureFilter = null, arrivalFilter = null) {
     let parsedData = {};
     let items = data?.data?.Items || [];
 
-    let selectedDateStr = null;
-    if (selectedDate) {
-        selectedDateStr = DateTime.fromJSDate(selectedDate).toFormat("yyyy-MM-dd");
-    }
 
     for (let i = 0; i < items.length; i++) {
         let o = items[i];
 
-        if (!o.StopTimes || o.StopTimes.length < 2) {
-            continue;
-        }
+        if (!o.StopTimes || o.StopTimes.length < 2) continue;
 
         const departureStop = o.StopTimes[0];
         const arrivalStop = o.StopTimes[o.StopTimes.length - 1];
@@ -1096,75 +1223,84 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
         const departureCode = departureStop.Shortname || "";
         const arrivalCode = arrivalStop.Shortname || "";
 
-        if (departureFilter) {
-            const allowedDepartureCodes = departureFilter.split("|");
-            if (!allowedDepartureCodes.includes(departureCode)) {
-                continue;
-            }
-        }
-
-        if (arrivalFilter) {
-            const allowedArrivalCodes = arrivalFilter.split("|");
-            if (!allowedArrivalCodes.includes(arrivalCode)) {
-                continue;
-            }
-        }
+        if (departureFilter && !departureFilter.split("|").includes(departureCode)) continue;
+        if (arrivalFilter && !arrivalFilter.split("|").includes(arrivalCode)) continue;
 
         const departureRaw = departureStop.DepartureTime || "";
         const arrivalRaw = arrivalStop.ArrivalTime || "";
 
-        const departureDT = DateTime.fromISO(departureRaw, { zone: "utc" });
-        const arrivalDT = DateTime.fromISO(arrivalRaw, { zone: "utc" });
+        console.log("ODH FEED CHECK", {
+        id: o.Id,
+        tripId: o?.Mapping?.skyalps?.TripID || null,
+        routeCode: o?.Shortname || o?.Route?.Shortname || "",
+        departureAirport: departureCode,
+        arrivalAirport: arrivalCode,
+        departureRaw: departureRaw,
+        arrivalRaw: arrivalRaw
+        });
+
+        const departureDT = DateTime.fromISO(departureRaw);
+        const arrivalDT = DateTime.fromISO(arrivalRaw);
+
+        if (!departureDT.isValid || !arrivalDT.isValid) continue;
+
+        const now = DateTime.now();
+
+        if (departureDT <= now) {
+        continue;
+        }
 
         const departureDate = departureRaw.substring(0, 10);
         const departureTime = departureRaw.substring(11, 16);
+
         const arrivalDate = arrivalRaw.substring(0, 10);
         const arrivalTime = arrivalRaw.substring(11, 16);
 
-        if (selectedDateStr && departureDate !== selectedDateStr) {
-            continue;
+        const today = DateTime.now().startOf("day");
+        const flightDay = DateTime.fromISO(departureDate).startOf("day");
+
+        if (flightDay < today) {
+        continue;
         }
 
         let obj = {
-            key: o.Id,
-            departure: {
-                date: departureDate,
-                time: departureTime,
-                timestamp: Math.floor(departureDT.toSeconds()),
-                airport: {
-                    iataCode: departureCode,
-                    name: departureStop?.Detail?.en?.Title || departureCode,
-                    coordinates: departureStop?.Geo?.position
-                        ? [departureStop.Geo.position.Latitude, departureStop.Geo.position.Longitude]
-                        : null
-                }
-            },
-            arrival: {
-                date: arrivalDate,
-                time: arrivalTime,
-                timestamp: Math.floor(arrivalDT.toSeconds()),
-                airport: {
-                    iataCode: arrivalCode,
-                    name: arrivalStop?.Detail?.en?.Title || arrivalCode,
-                    coordinates: arrivalStop?.Geo?.position
-                        ? [arrivalStop.Geo.position.Latitude, arrivalStop.Geo.position.Longitude]
-                        : null
-                }
-            },
-            status: "SCHEDULED",
-            company: o?.Agency?.Shortname || o?.Source || "",
-            routeCode: o?.Shortname || o?.Route?.Shortname || "",
-            tripId: o?.Mapping?.skyalps?.TripID || null,
-            rates: null
+        key: o.Id,
+        departure: {
+            date: departureDate,
+            time: departureTime,
+            timestamp: DateTime.fromISO(departureRaw).toSeconds(),
+            airport: {
+            iataCode: departureCode,
+            name: departureStop?.Detail?.en?.Title || departureCode,
+            coordinates: departureStop?.Geo?.position
+                ? [departureStop.Geo.position.Longitude, departureStop.Geo.position.Latitude]
+                : null
+            }
+        },
+        arrival: {
+            date: arrivalDate,
+            time: arrivalTime,
+            timestamp: DateTime.fromISO(arrivalRaw).toSeconds(),
+            airport: {
+            iataCode: arrivalCode,
+            name: arrivalStop?.Detail?.en?.Title || arrivalCode,
+            coordinates: arrivalStop?.Geo?.position
+                ?  [arrivalStop.Geo.position.Longitude, arrivalStop.Geo.position.Latitude]
+                : null
+            }
+        },
+        status: "SCHEDULED",
+        company: o?.Agency?.Shortname || o?.Source || "",
+        routeCode: o?.Shortname || o?.Route?.Shortname || "",
+        tripId: o?.Mapping?.skyalps?.TripID || null,
+        rates: null
         };
 
         obj.flightInfo = this.getFlightInfo(obj);
 
-        let k = obj.departure.date;
-        if (!parsedData[k]) {
-            parsedData[k] = [];
-        }
-        parsedData[k].push(obj);
+        const key = obj.departure.date;
+        if (!parsedData[key]) parsedData[key] = [];
+        parsedData[key].push(obj);
     }
 
     for (let k in parsedData) {
@@ -1172,12 +1308,50 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
     }
 
     return parsedData;
-},
-   async getData(paramsObj = {}) {
-    return await axios.get(this.options.rest_endpoint, {
-        params: paramsObj
-    });
     },
+  async getData(paramsObj = {}) {
+  const cacheKey = JSON.stringify(paramsObj);
+
+  if (!this.tripDataCache) {
+    this.tripDataCache = {};
+  }
+
+  if (this.tripDataCache[cacheKey]) {
+    console.log("Using cached Trip data");
+    return this.tripDataCache[cacheKey];
+  }
+
+  let allItems = [];
+  let pageNumber = 1;
+  const pageSize = 500;
+
+  while (true) {
+    const response = await axios.get(this.options.rest_endpoint, {
+      params: {
+        ...paramsObj,
+        pagesize: pageSize,
+        pagenumber: pageNumber
+      }
+    });
+
+    const items = response.data?.Items || [];
+    allItems.push(...items);
+
+    if (items.length < pageSize) break;
+
+    pageNumber++;
+  }
+
+  const result = {
+    data: {
+      Items: allItems
+    }
+  };
+
+  this.tripDataCache[cacheKey] = result;
+
+  return result;
+},
     async fetchSchedules(searchData) {
     try {
         let departureDate = null;
@@ -1203,22 +1377,22 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
         }
 
         const data = await this.getData({
-            pagesize: 500
+              source: "skyalps"
         });
 
+        this.checkSkyAlpsDataQuality(data.data.Items || []);
+
         this.outwardFlights = this.parseData(
-            data,
-            searchData.departureAirport?.value,
-            searchData.arrivalAirport?.value,
-            departureDate
+        data,
+        searchData.departureAirport?.value,
+        searchData.arrivalAirport?.value
         );
 
         if (searchData.roundTripCheck == "1") {
-            this.returnFlights = this.parseData(
-                data,
-                searchData.arrivalAirport?.value,
-                searchData.departureAirport?.value,
-                returnDate
+           this.returnFlights = this.parseData(
+            data,
+            searchData.arrivalAirport?.value,
+            searchData.departureAirport?.value
             );
         } else {
             this.returnFlights = {};
@@ -1351,9 +1525,9 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
                 }))
                 if(min == null || min == Infinity){
                     if(this.outwardFlights[key].length === 0){
-                        return "-";
+                        return "N/A";
                     }else{
-                        return "NA";
+                        return "✈︎";
                     }
                 }else{
                     return this.formatEuro(min);
@@ -1366,9 +1540,9 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
                 }))
                 if(min == null || min == Infinity){
                     if(this.returnFlights[key].length === 0){
-                        return "-";
+                        return "N/A";
                     }else{
-                        return "NA";
+                        return "✈︎";
                     }
                 }else{
                     return this.formatEuro(min);
@@ -1376,7 +1550,7 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
             }
         }
         
-        return "-";
+        return "N/A";
     },
     stepBack(){
         if(this.currentMobileStep == 0){
@@ -1543,18 +1717,16 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
         return false;
     },
     lastOutwardFlights() {
-        let els = []
-        if(this.outwardFlights && this.outwardFlights[this.outwardFlightsSelectedDate]){
-            els = this.outwardFlights[this.outwardFlightsSelectedDate].slice(0, this.max_entries.return)
-        }
-        return els
+    if (this.outwardFlights && this.outwardFlights[this.outwardFlightsSelectedDate]) {
+        return this.outwardFlights[this.outwardFlightsSelectedDate]
+    }
+    return []
     },
-    lastReturnFlights() {
-        let els = []
-        if(this.returnFlights && this.returnFlights[this.returnFlightsSelectedDate]){
-            els = this.returnFlights[this.returnFlightsSelectedDate].slice(0, this.max_entries.return)
-        }
-        return els
+        lastReturnFlights() {
+    if (this.returnFlights && this.returnFlights[this.returnFlightsSelectedDate]) {
+        return this.returnFlights[this.returnFlightsSelectedDate]
+    }
+    return []
     },
     sortedAirports() {
         let sortedAirports = []
@@ -1633,6 +1805,20 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
 
     //init timezone
     this.current_timezone = this.options.timezone
+
+    const italyCluster = this.sortedAirportsClusters.find(
+    (cluster) => cluster.label.toLowerCase().includes("italy")
+    );
+
+    if (italyCluster) {
+    this.departureAirport = italyCluster;
+
+    this.$nextTick(() => {
+        if (this.$refs.departureAirportSelector) {
+        this.$refs.departureAirportSelector.setValue(italyCluster);
+        }
+    });
+    }
     
     //init units as metric
     if (this.options.metricUnits) {
@@ -1642,17 +1828,25 @@ formatDisplayDate(date = "2022-01-01", outputFormat = "EEE dd MMM") {
       }
     }
     
-    this.roundTripCheck = 1;
+    this.roundTripCheck = "0";
+    this.rangeDate = new Date();
+    
 
     //run resize event
     this.handleViewportResize()
   },
   //component whatcers
   watch: {
-    "roundTripCheck": function () {
-        this.rangeDate = null;
-    }
-  },
+  roundTripCheck(newValue) {
+    this.$nextTick(() => {
+      if (newValue === "0") {
+        this.rangeDate = new Date();
+      } else {
+        this.rangeDate = [new Date(), null];
+      }
+    });
+  }
+},
 
   //on component has been created
   created: async function () {

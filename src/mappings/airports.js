@@ -24,7 +24,7 @@ module.exports = {
       nation: "IT"
     },
     HAJ: {
-      pos: [0,0],
+      pos: [9.6851, 52.4611],
       name: "Hannover",
       nation: "DE"
     },
@@ -74,7 +74,7 @@ module.exports = {
       nation: "IT"
     },
     CRV: {
-      pos: [0,0],
+      pos: [17.074833, 38.991664],
       name: "Crotone",
       nation: "IT"
     },
@@ -119,7 +119,7 @@ module.exports = {
       nation: "BEL"
     },
     KSF: {
-      pos: [0, 0],
+      pos: [9.3916, 51.4184],
       name: "Kassel",
       nation: "DE"
     },
@@ -129,7 +129,7 @@ module.exports = {
       nation: "HRV"
     },
     FCO: {
-      pos: [0, 0],
+      pos: [12.23889, 41.80028],
       name: "Roma Fiumicino",
       nation: "IT"
     },
@@ -154,7 +154,7 @@ module.exports = {
       nation: "GBR"
     },
     BRN: {
-      pos: [0, 0],
+      pos: [7.497153, 46.914101],
       name: "Berna",
       nation: "CH"
     },
