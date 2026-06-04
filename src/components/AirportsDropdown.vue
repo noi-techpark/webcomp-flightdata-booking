@@ -15,6 +15,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 @blur="onBlur"
                 placeholder="Search something..." >
 
+                <span
+                    v-if="selectedElement && selectedElement.value"
+                    class="clear-selection"
+                    @mousedown.prevent="clearSelection"
+                    >
+                    ✕
+                </span>
+
         <div class="airport-dropdown-container text-left" v-bind:class="classObject">            
             <div v-for="(cluster, index) in filteredClusters" class="airport-dropdown-cluster">
                 <div class="airport-dropdown-element clusterParent text-start" @click="selectAirport(cluster)">
@@ -138,7 +146,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 
                 this.isOpen = false;
                 this.searchText = selectedLabel
+            },
+
+            clearSelection() {
+            this.selectedElement = {
+                value: null,
+                label: ""
+            };
+
+            this.searchText = "";
             }
+
         }
 
     };
@@ -191,6 +209,25 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         }
     }
 
+
+            .airports-selector {
+        position: relative;
+        }
+
+        .clear-selection {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 16px;
+        color: #666;
+        z-index: 20;
+        }
+
+        .clear-selection:hover {
+        color: #000;
+        }
 
     .form-floating > .form-control{
         padding-top: 1.1rem;   
